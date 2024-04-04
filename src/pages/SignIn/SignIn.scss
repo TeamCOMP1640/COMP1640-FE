@@ -1,0 +1,18 @@
+.sigin-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5ff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: fixed;
+  display: flex;
+
+  .container-header-mobile {
+    background: #5646ff;
+    height: 60px;
+    line-height: 60px;
+    position: relative;
+    color: #fff;
+  }
+}

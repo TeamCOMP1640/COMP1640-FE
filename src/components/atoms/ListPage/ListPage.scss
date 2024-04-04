@@ -1,0 +1,13 @@
+.listpage {
+  .ant-card-body {
+    padding: 0rem !important;
+  }
+  .ant-select-selector {
+    &:hover {
+      border-color: #5646ff !important;
+    }
+    &:focus {
+      border-color: #5646ff !important;
+    }
+  }
+}

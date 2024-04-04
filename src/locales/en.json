@@ -1,0 +1,193 @@
+{
+  "BREADCRUMBS": {
+    "DASHBOARD": "Dashboard",
+    "DETAIL_COURSE": "Detail Courses ",
+    "COURSES": "Courses",
+    "COURSE_CREATE": "Course create",
+    "ACCOUNTS": "Accounts",
+    "ACCOUNT_DETAIL": "Detail Account",
+    "GIFTS": "Gifts",
+    "WORKSHOPS": "Workshops",
+    "WORKSHOP_DETAIL": "Detail Workshop"
+  },
+  "BUTTON": {
+    "UPDATE": "Update",
+    "DELETE": "Delete",
+    "BACK_HOME": "Back to home",
+    "FORGOT_PWD": "Forgot Password?",
+    "SEARCH": "Search",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "COURSE_CREATE": "Course create",
+    "UPLOAD": "Upload",
+    "COMPLETED_FEEDBACK": "Complete feedback",
+    "COMFIRM": "Confirm",
+    "CREATE": "Create",
+    "ADD_SCORE": "Add score"
+  },
+  "SIDER": {
+    "DASHBOARD": "Dashboard",
+    "GIFTS": "Gifts management",
+    "COURSES": "Courses",
+    "ACCOUNTS": "Accounts management",
+    "PROFILE": "Profile",
+    "LANGUAGES": "Languages",
+    "LOGOUT": "Logout",
+    "WORKSHOPS": "Workshops management"
+  },
+  "MODAL": {
+    "COURSE_CREATE": "Course create",
+    "TITLE_DELETE": "Delete {{name}}",
+    "CONFIRM_DELETE": "Are you sure you want to delete {{name}}",
+    "CREATE": "Create"
+  },
+  "LANGUAGES": {
+    "VI": "Vietnamese",
+    "EN": "English"
+  },
+  "LOGIN": {
+    "TITLE": "Welcome!",
+    "TEXT": "Enter your details to sign in your account",
+    "BUTTON": "Sign in",
+    "PASSWORD": "Password",
+    "PASSWORD_INPUT": "Enter password",
+    "USERNAME": "Username",
+    "USERNAME_INPUT": "Enter username"
+  },
+  "VALIDATE": {
+    "NOT_FOUND": "Oops! Something is wrong.",
+    "REQUIRED": "{{field}} is required",
+    "INVALID": "{{field}} is invalid"
+  },
+  "INPUT": {
+    "NAME": "Name",
+    "TYPE": "Type",
+    "STATUS": "Status",
+    "COURSES": "Courses",
+    "SPEAKER": "Speaker",
+    "DESCRIPTION": "Description",
+    "DATE": "Date"
+  },
+  "PLACEHOLDER": {
+    "NAME": "Enter name",
+    "TYPE": "Enter type",
+    "STATUS": "Choose status",
+    "COURSES": "Choose courses",
+    "DATE": "Choose date",
+    "SPEAKER": "Enter speaker",
+    "DESCRIPTION": "Enter description",
+    "SCORE": "Enter score"
+  },
+  "COURSE": {
+    "COURSE_LIST": "Course List",
+    "NOT_STARTED": "Not Started",
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED": "Completed",
+    "NAME": "Name",
+    "TYPE": "Type",
+    "MENTEE": "Mentee",
+    "MENTOR": "Mentor",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "STATUS": "Status",
+    "NO_INFO": "No information"
+  },
+  "TABLE": {
+    "EMPTY": "Empty",
+    "ACTIONS": "Actions",
+    "TOTAL_COURSES": "Total Courses: {{total}}",
+    "TOTAL_USERS": "Total users: {{total}}",
+    "TOTAL_PAGE": "Total pages: {{total}}",
+    "TOTAL_WORKSHOP": "Total workshops: {{total}}",
+    "DISPLAY": "Display",
+    "ITEM": "items"
+  },
+  "ACTION": {
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "DETAILS": "Detail",
+    "SYNC": "Sync Course"
+  },
+  "STATUS": {
+    "NOT_STARTED": "Not Started",
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED": "Completed"
+  },
+  "COURSES": {
+    "NAME": "Name",
+    "TYPE": "Type",
+    "MENTOR": "Mentor",
+    "MENTEE": "Mentee",
+    "NAME_ENTER": "Enter name",
+    "TYPE_ENTER": "Enter type",
+    "MENTEE_CHOOSE": "Choose mentee",
+    "MENTOR_CHOOSE": "Choose mentor",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
+    "STATUS": "Status",
+    "TIMELINE": "Timeline",
+    "TEAMS": "Team"
+  },
+  "MESSAGE": {
+    "LOGIN_FAIL": "Incorrect account",
+    "LOGIN_SUCCESS": "Sign in successfully",
+    "LOGOUT_SUCCESS": "Sign out successfully",
+    "LOGOUT_FAIL": "Sign out failed",
+    "UPLOAD_SUCCESS": "Upload file successfully",
+    "COMPLETED_FEEDBACK": "Are you sure you want to complete feedback",
+    "COMPLETED_FEEDBACK_SUCCESS": "Completed feedback successfully",
+    "COMPLETED_FEEDBACK_FAIL": "Completed feedback failed",
+    "DELETED_WORKSHOP_SUCCESS": "Deleted workshop successfully",
+    "DELETED_WORKSHOP_FAIL": "Deleted workshop failed",
+    "CREATED_WORKSHOP_SUCCESS": "Created workshop successfully",
+    "CREATED_WORKSHOP_FAILD": "Created workshop failed",
+    "UPDATED_WORKSHOP_SUCCESS": "Updated workshop successfully",
+    "UPDATED_WORKSHOP_FAIL": "Updated workshop failed",
+    "ADD_SCORE_SUCCESS": "Add score successfully",
+    "ADD_SCORE_FAIL": "Add score failed",
+    "INCORRECT_USER_NAME_OR_PASSWORD": "Username or password incorrect"
+  },
+  "MENTEE": {
+    "AVATAR": "Avatar",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "LESSON": "Completed Lesson"
+  },
+  "ACCOUNT": {
+    "COURSES": "Courses",
+    "SCORE": "Score",
+    "NAME": "Name",
+    "EMAIL": "Email"
+  },
+  "TEAM": {
+    "NAME": "Team",
+    "MENTEES": "Mentees",
+    "MENTORS": "Mentors",
+    "MENTEE": "Mentee",
+    "MENTOR": "Mentor"
+  },
+  "WORKSHOP": {
+    "WORKSHOP_LIST": "Workshop List",
+    "CREATE_WORKSHOP": "Create Workshop",
+    "UPDATE_WORKSHOP": "Update Workshop",
+    "TITLE": "Title",
+    "SPEAKER": "Speaker",
+    "STATUS": "Status",
+    "DATE": "Date",
+    "SCORES": "Scores",
+    "ACTION": "Action",
+    "COURSES": "Courses",
+    "DESCRIPTION": "Description",
+    "REVIEWER": "Reviewer",
+    "CONTENT": "Content",
+    "NAME": "Name"
+  },
+  "DASHBOARD": {
+    "LEADERBOARD": "Leaderboard",
+    "VIEW_ALL": "View All",
+    "POINTS": "point",
+    "WELCOME": "Welcome",
+    "USER": "User",
+    "EVENT_CALENDAR": "Event Calendar"
+  }
+}
