@@ -1,0 +1,22 @@
+.ant-modal-body {
+  max-height: 70vh !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.dashboard-modal{
+  .ant-modal-content{
+    padding: 0 !important;
+    .ant-modal-header {
+      border-bottom: 1px solid #D8DAE0;
+      padding: 15px 20px;
+      margin-bottom: 0;
+    }
+    .ant-modal-body{
+      padding: 15px 20px;
+    }
+    .ant-modal-footer{
+      border-top: 1px solid #D8DAE0;
+      padding: 15px 20px;
+    }
+  }
+}

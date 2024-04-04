@@ -1,0 +1,194 @@
+{
+  "BREADCRUMBS": {
+    "DASHBOARD": "Bảng điều khiển",
+    "DETAIL_COURSE": "Chi tiết khóa học ",
+    "COURSES": "Danh sách khóa học",
+    "COURSE_CREATE": "Tạo khóa học",
+    "ACCOUNTS": "Danh sách tài khoản",
+    "ACCOUNT_DETAIL": "Chi tiết tài khoản",
+    "GIFTS": "Quà tặng",
+    "WORKSHOPS": "Workshops",
+    "WORKSHOP_DETAIL": "Chi tiết Workshop"
+  },
+  "BUTTON": {
+    "UPDATE": "Cập nhật",
+    "DELETE": "Xóa",
+    "BACK_HOME": "Quay lại trang chủ",
+    "FORGOT_PWD": "Quên mật khẩu?",
+    "SEARCH": "Tìm kiếm",
+    "CANCEL": "Quay lại",
+    "SAVE": "Lưu",
+    "COURSE_CREATE": "Tạo khóa học",
+    "UPLOAD": "Tải lên",
+    "COMPLETED_FEEDBACK": "Hoàn tất",
+    "COMFIRM": "Xác nhận",
+    "CREATE": "Tạo",
+    "ADD_SCORE": "Cộng điểm"
+  },
+  "SIDER": {
+    "DASHBOARD": "Bảng điều khiển",
+    "GIFTS": "Quản lý quà",
+    "COURSES": "Khóa học",
+    "ACCOUNTS": "Quản lý tài khoản",
+    "PROFILE": "Trang cá nhân",
+    "LANGUAGES": "Ngôn ngữ",
+    "LOGOUT": "Đăng xuất",
+    "WORKSHOPS": "Quản lý workshops"
+  },
+  "MODAL": {
+    "COURSE_CREATE": "Tạo khóa học",
+    "TITLE_DELETE": "Xóa {{name}}",
+    "CONFIRM_DELETE": "Bạn có chắc chắn muốn xóa {{name}}",
+    "CREATE": "Tạo"
+  },
+  "LANGUAGES": {
+    "VI": "Tiếng Việt",
+    "EN": "Tiếng Anh"
+  },
+  "LOGIN": {
+    "TITLE": "Chào mừng!",
+    "TEXT": "Nhập thông tin để đăng nhập vào tài khoản của bạn",
+    "BUTTON": "Đăng nhập",
+    "PASSWORD": "Mật khẩu",
+    "PASSWORD_INPUT": "Nhập mật khẩu",
+    "USERNAME": "Username",
+    "USERNAME_INPUT": "Nhập username"
+  },
+  "VALIDATE": {
+    "NOT_FOUND": "Rất tiếc! Có điều gì đó không đúng.",
+    "REQUIRED": "{{field}} là bắt buộc",
+    "INVALID": "{{field}} không hợp lệ"
+  },
+  "TABLE": {
+    "ACTIONS": "Hành động",
+    "EMPTY": "Không có dữ liệu",
+    "TOTAL_PAGE": "Tổng trang: {{total}}",
+    "TOTAL_COURSES": "Tổng số khóa học: {{total}}",
+    "TOTAL_USERS": "Tổng số tài khoản: {{total}}",
+    "TOTAL_WORKSHOP": "Tổng số workshops: {{total}}",
+    "DISPLAY": "Hiển thị",
+    "ITEM": "Mục"
+  },
+
+  "INPUT": {
+    "NAME": "Tên",
+    "TYPE": "Loại",
+    "STATUS": "Trạng thái",
+    "COURSES": "Khóa học",
+    "SPEAKER": "Diễn giả",
+    "DESCRIPTION": "Chi tiết",
+    "DATE": "Thời gian"
+  },
+  "PLACEHOLDER": {
+    "NAME": "Nhập tên",
+    "TYPE": "Chọn loại",
+    "STATUS": "Chọn trạng thái",
+    "COURSES": "Chọn khóa học",
+    "SPEAKER": "Nhập diễn giả",
+    "DESCRIPTION": "Nhập thông tin chi tiết",
+    "DATE": "Nhập thời gian",
+    "SCORE": "Nhập điểm"
+  },
+  "COURSE": {
+    "COURSE_LIST": "Danh sách khóa học",
+    "NOT_STARTED": "Chưa bắt đầu",
+    "IN_PROGRESS": "Đang thực hiện",
+    "COMPLETED": "Hoàn thành",
+    "NAME": "Tên",
+    "TYPE": "Loại",
+    "MENTEE": "Học viên",
+    "MENTOR": "Mentor",
+    "START_DATE": "Ngày bắt đầu",
+    "END_DATE": "Ngày kết thúc",
+    "STATUS": "Trạng thái",
+    "NO_INFO": "Không có thông tin"
+  },
+  "ACTION": {
+    "EDIT": "Chỉnh sửa",
+    "DELETE": "Xóa",
+    "DETAILS": "Chi tiết",
+    "SYNC": "Đồng bộ khoá học"
+  },
+  "STATUS": {
+    "NOT_STARTED": "Chưa bắt đầu",
+    "IN_PROGRESS": "Đang thực hiện",
+    "COMPLETED": "Hoàn thành"
+  },
+  "COURSES": {
+    "NAME": "Tên",
+    "TYPE": "Loại",
+    "MENTOR": "Mentor",
+    "MENTEE": "Học viên",
+    "NAME_ENTER": "Chọn tên",
+    "TYPE_ENTER": "Chọn loại khóa học",
+    "MENTOR_CHOOSE": "Chọn người hướng dẫn",
+    "MENTEE_CHOOSE": "Chọn học viên",
+    "START_DATE": "Ngày bắt đầu",
+    "END_DATE": "Ngày kết thúc",
+    "STATUS": "Trạng thái",
+    "TIMELINE": "Timeline",
+    "TEAMS": "Nhóm"
+  },
+  "MESSAGE": {
+    "LOGIN_FAIL": "Tài khoản không chính xác",
+    "LOGIN_SUCCESS": "Đăng nhập thành công",
+    "LOGOUT_SUCCESS": "Đăng xuất thành công",
+    "LOGOUT_FAIL": "Đăng xuất thất bại",
+    "UPLOAD_SUCCESS": "Tải ảnh lên thành công",
+    "COMPLETED_FEEDBACK": "Bạn có chắc chắn muốn hoàn tất phản hồi",
+    "COMPLETED_FEEDBACK_SUCCESS": "Hoàn tất phản hồi thành công",
+    "COMPLETED_FEEDBACK_FAILD": "Hoàn tất phản hồi thất bại",
+    "DELETED_WORKSHOP_SUCCESS": "Xóa workshop thành công",
+    "DELETED_WORKSHOP_FAILD": "Xóa workshop thất bại",
+    "CREATED_WORKSHOP_SUCCESS": "Tạo workshop thành công",
+    "CREATED_WORKSHOP_FAILD": "Tạo workshop thất bại",
+    "UPDATED_WORKSHOP_SUCCESS": "Cập nhật workshop thành công",
+    "UPDATED_WORKSHOP_FAILD": "Cập nhật workshop thất bại",
+    "ADD_SCORE_SUCCESS": "Cộng điểm thành công",
+    "ADD_SCORE_FAIL": "Cộng điểm thất bại",
+    "INCORRECT_USER_NAME_OR_PASSWORD": "Tên đăng nhập hoặc mật khẩu không chính xác"
+  },
+  "MENTEE": {
+    "AVATAR": "Ảnh đại diện",
+    "NAME": "Tên",
+    "EMAIL": "Email",
+    "LESSON": "Bài học đã hoàn thành"
+  },
+  "ACCOUNT": {
+    "COURSES": "Khóa học",
+    "SCORE": "Điểm",
+    "NAME": "Tên",
+    "EMAIL": "Email"
+  },
+  "TEAM": {
+    "NAME": "Nhóm",
+    "MENTEES": "Học viên",
+    "MENTORS": "Giảng viên",
+    "MENTEE": "Học viên",
+    "MENTOR": "Giảng viên"
+  },
+  "WORKSHOP": {
+    "WORKSHOP_LIST": "Danh sách workshop",
+    "CREATE_WORKSHOP": "Tạo Workshop",
+    "TITLE": "Tên",
+    "SPEAKER": "Diễn giả",
+    "STATUS": "Trạng thái",
+    "DATE": "Thời gian",
+    "SCORES": "Điểm",
+    "ACTION": "Hành động",
+    "COURSES": "Khóa học",
+    "DESCRIPTION": "Chi tiết",
+    "REVIEWER": "Người đánh giá",
+    "CONTENT": "Nội dung",
+    "NAME": "Tên",
+    "UPDATE_WORKSHOP": "Cập nhật Workshop"
+  },
+  "DASHBOARD": {
+    "LEADERBOARD": "Bảng xếp hạng",
+    "VIEW_ALL": "Xem tất cả",
+    "POINTS": "điểm",
+    "WELCOME": "Chào mừng",
+    "USER": "Người dùng",
+    "EVENT_CALENDAR": "Lịch sự kiện"
+  }
+}

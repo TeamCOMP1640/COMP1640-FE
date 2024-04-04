@@ -1,0 +1,136 @@
+.list-table {
+  .ant-table-thead
+    > tr
+    > th:not(:last-child):not(.ant-table-selection-column):not(
+      .ant-table-row-expand-icon-cell
+    ):not([colspan])::before {
+    content: none;
+  }
+  .ant-table-body {
+    overflow-x: hidden !important;
+    height: auto !important;
+    max-height: calc(100vh - 360px) !important;
+  }
+}
+
+.simple-table {
+  .ant-table-thead
+    > tr
+    > th:not(:last-child):not(.ant-table-selection-column):not(
+      .ant-table-row-expand-icon-cell
+    ):not([colspan])::before {
+    content: none;
+  }
+  .ant-table-body {
+    overflow-x: hidden !important;
+    height: auto !important;
+    max-height: calc(100vh - 650px) !important;
+  }
+}
+
+.ant-pagination-item {
+  border: none !important;
+  background: none !important;
+
+  a {
+    color: #727272;
+    font-weight: 600;
+  }
+}
+
+.ant-pagination-item a:hover,
+.ant-pagination-item-active a {
+  color: #5646ff !important;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  display: flex !important;
+  padding: 5px 17px;
+  color: $color-text-basic !important;
+  background-color: #ffffff !important;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+  border-radius: 12px;
+  height: 30px;
+}
+
+.ant-select-selection-placeholder {
+  display: flex;
+  align-items: center;
+}
+
+.ant-select-selection-item {
+  display: flex;
+  align-items: center;
+  color: $color-text-basic !important;
+}
+.ant-table-wrapper {
+  .btn-action {
+    width: 24px;
+    height: 24px;
+    padding: unset;
+    border-radius: 8px;
+    color: #fff;
+    border: none;
+    margin-right: 4px;
+
+    &.white {
+      background-color: white;
+      box-shadow: 0px 1px 1px #00000029;
+    }
+
+    &.success {
+      background-color: #00c07e;
+
+      &:hover {
+        background-color: #009a65;
+      }
+    }
+
+    &.primary {
+      background-color: #5646ff;
+
+      &:hover {
+        background-color: #5143e9;
+      }
+    }
+
+    &.danger {
+      background-color: #fc5661;
+
+      &:hover {
+        background-color: #fb303e;
+      }
+    }
+
+    &:hover {
+      color: #fff !important;
+    }
+
+    &:focus {
+      color: #fff !important;
+    }
+    svg {
+      vertical-align: unset;
+    }
+  }
+}
+.ant-card-head-title {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+@media only screen and (max-width: 992px) {
+  .list-table {
+    .ant-table-body {
+      overflow-x: auto !important;
+    }
+  }
+
+  .simple-table {
+    .ant-table-body {
+      overflow-x: auto !important;
+    }
+  }
+}
