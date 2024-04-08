@@ -4,7 +4,7 @@ export const API_URL = {
   LOGOUT: "auth/logout",
   COURSE: "/courses",
   TEAMS: "/teams",
-  ACCOUNT: "/accounts",
+  ACCOUNT: "/users",
   ACCOUNT_NO_PAGINATE: "/accounts/no-pagination",
   COURSE_NO_PAGINATE: "/courses/no-paginate",
   WORKSHOPS: "/workshops",

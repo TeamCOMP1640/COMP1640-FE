@@ -10,7 +10,7 @@ import router from "@app/router";
 import SpinLoading from "./components/atoms/SpinLoading/SpinLoading.tsx";
 import i18n from "./config/i18n.ts";
 import "./index.css";
-import store from "./redux/store.ts";
+import store from "./redux/store";
 
 const queryClient = new QueryClient();
 

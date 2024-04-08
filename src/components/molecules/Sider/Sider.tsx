@@ -22,12 +22,12 @@ import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
-// import { enIcon, logo, viIcon } from "@app/assets/images";
+import { enIcon, logo, viIcon } from "@app/assets/images";
 import Icon from "@app/components/atoms/Icon/Icon";
 import { getLocalStorage } from "@app/config/storage";
 import { LOCALES, STORAGE_KEY } from "@app/constant";
 import { AVATAR, USER_PROFILE } from "@app/constant/auth";
-// import { useLogout } from "@app/hooks/useAuth";
+import { useLogout } from "@app/hooks/useAuth";
 import "./Sider.scss";
 
 // type MenuProps = {
@@ -51,7 +51,7 @@ const Sider: FC = () => {
     setMenuKey(urlKey);
   }, [location]);
 
-  // const { mutate: handleLogout } = useLogout();
+  const { mutate: handleLogout } = useLogout();
 
   const menuItems: DropdownProps["items"] = [
     {
@@ -126,7 +126,7 @@ const Sider: FC = () => {
               }`}
             >
               <Col>
-                {/* <Image preview={false} src={viIcon} width={20} /> */}
+                <Image preview={false} src={viIcon} width={20} />
               </Col>
               <Col>
                 <Typography className="font-sm text-normal">
@@ -150,7 +150,7 @@ const Sider: FC = () => {
               }`}
             >
               <Col>
-                {/* <Image preview={false} src={enIcon} width={20} /> */}
+                <Image preview={false} src={enIcon} width={20} />
               </Col>
               <Col>
                 <Typography className="font-sm text-normal">
@@ -180,7 +180,7 @@ const Sider: FC = () => {
       label: (
         <Typography
           className="font-sm text-normal"
-          // onClick={() => handleLogout()}
+          onClick={() => handleLogout()}
         >
           {t("SIDER.LOGOUT")}
         </Typography>
@@ -196,7 +196,7 @@ const Sider: FC = () => {
             <Image
               onClick={() => navigate("/")}
               preview={false}
-              // src={logo}
+              src={logo}
               width={40}
               className="mt-1rem cursor-pointer"
             />
