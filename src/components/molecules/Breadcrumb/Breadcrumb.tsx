@@ -3,7 +3,7 @@ import { Breadcrumb as BreadcrumbAnt, Image, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-// import { homeIcon } from "@app/assets/images";
+import { homeIcon } from "@app/assets/images";
 import { IBreadcrumbItem } from "@app/interfaces";
 import "./Breadcrumb.scss";
 
@@ -25,7 +25,7 @@ export const Breadcrumb = ({ items }: Props) => {
       <Item className="breadcrumb-item" onClick={() => navigate("/")}>
         <Image
           preview={false}
-          // src={homeIcon}
+          src={homeIcon}
           width={18}
           className="cursor-pointer"
         />

@@ -32,7 +32,7 @@ export default ({ mode }) => {
       },
       host: true,
       strictPort: true,
-      port: 3000,
+      port: 3001,
     },
     build: {
       terserOptions: {

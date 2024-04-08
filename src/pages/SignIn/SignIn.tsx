@@ -10,7 +10,7 @@ import { Button } from "@app/components/atoms/Button/Button";
 import { TextField } from "@app/components/atoms/TextField/TextField";
 import i18n from "@app/config/i18n";
 import { yupSync } from "@app/helpers/yupSync";
-// import { useLogin } from "@app/hooks/useAuth";
+import { useLogin } from "@app/hooks/useAuth";
 import { Credentials } from "@app/interfaces/user.interface";
 import { RootState } from "@app/redux/store";
 import "./SignIn.scss";
@@ -57,11 +57,11 @@ const SignIn = () => {
     }
   }, [isAuth, navigate]);
 
-  // const { mutate: handleLogin } = useLogin();
+  const { mutate: handleLogin } = useLogin();
 
-  // function onSubmit(data: Credentials) {
-  //   handleLogin(data);
-  // }
+  function onSubmit(data: Credentials) {
+    handleLogin(data);
+  }
 
   return (
     <div className="sigin-container">
@@ -79,7 +79,7 @@ const SignIn = () => {
             >
               <Form
                 form={form}
-                // onFinish={onSubmit}
+                onFinish={onSubmit}
                 labelWrap={true}
                 className="flex flex-col w-full py-0 px-50px max-w-559px content-center justify-center"
               >
