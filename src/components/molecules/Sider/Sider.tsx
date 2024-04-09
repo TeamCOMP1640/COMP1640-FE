@@ -193,13 +193,13 @@ const Sider: FC = () => {
       <Row className="flex flex-col h-screen">
         <Col className="flex-none">
           <Space>
-            <Image
+            {/* <Image
               onClick={() => navigate("/")}
               preview={false}
               src={logo}
               width={40}
               className="mt-1rem cursor-pointer"
-            />
+            /> */}
           </Space>
         </Col>
 
