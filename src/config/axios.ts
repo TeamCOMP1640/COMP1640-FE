@@ -12,7 +12,7 @@ import { getLocalStorage, removeStorageData, setStorageData } from "./storage";
 const axiosInstance = axios.create();
 axios.defaults.baseURL =
   location.origin.includes("127.0.0.1") || location.origin.includes("localhost")
-    ? "http://localhost:3000"
+    ? "http://localhost:8080"
     : `${location.origin}/api`;
 
 axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
