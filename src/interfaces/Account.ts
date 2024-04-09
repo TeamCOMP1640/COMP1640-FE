@@ -1,13 +1,22 @@
 export interface AccountsInterface {
   id: string;
-  name: string;
+  fullname: string;
   email: string;
-  course: string[];
-  score: string;
+  role: string;
+  phone: string;
+  username: string;
+  password: string;
 }
 
+export interface AccountCreate {
+  fullname: string;
+  email: string;
+  role: string;
+  phone: string;
+  username: string;
+}
 
-export interface AddScoreInterface{
+export interface AddScoreInterface {
   accountId: string;
   score: number;
 }

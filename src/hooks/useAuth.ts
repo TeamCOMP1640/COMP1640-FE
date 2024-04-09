@@ -32,7 +32,7 @@ export const useLogin = () => {
       if (data.code !== 404 && data.message !== 403) {
         notificationSuccess(i18n.t("MESSAGE." + data.message));
         dispatchAuth(login(data.data));
-        setStorageData(ACCESS_TOKEN, data.data.accessToken);
+        setStorageData(ACCESS_TOKEN, data.data.access_token);
         setStorageData(REFRESH_TOKEN, data.data.refreshToken);
         setStorageData(USER_PROFILE, data.data.name);
         setStorageData(AVATAR, data.data.avt);
