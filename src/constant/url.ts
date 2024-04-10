@@ -12,4 +12,5 @@ export const API_URL = {
   WS_DASHBOARD: "/workshops/dashboard",
   SCORE: "/score",
   SYNC_COURSE: "/moodle/sync-data",
+  ACADEMICS: "/academics",
 };

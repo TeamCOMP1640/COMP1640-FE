@@ -6,23 +6,21 @@ import { TextField } from "@app/components/atoms/TextField/TextField";
 import { openModal } from "@app/components/molecules/ModalConfirm/OpenModal";
 import { ModalTypeEnum } from "@app/constant";
 import { ICON_URL } from "@app/constant/url-image";
-import {
-  useDeleteAccount,
-  useGetAccount,
-  useGetAccounts,
-} from "@app/hooks/useAccount";
+import { useDeleteAccount, useGetAccount } from "@app/hooks/useAccount";
 import { BREADCRUMBS_ENUM, IBreadcrumbItem } from "@app/interfaces";
 import { AccountsInterface } from "@app/interfaces/Account";
-import { GetListParams } from "@app/interfaces/common";
 import { Col, Input, Row, Space } from "antd";
 import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import AccountCreate from "../AccountCreate/AccountCreate";
-import AccountUpdate from "../AccountUpdate/AccountUpdate";
-import { AccountColumnsTable } from "./AccountListColumn";
 
-const AccountList = () => {
+import { AcademicColumnsTable } from "./AcademicListColumn";
+import { useDeleteAcademic, useGetAcademic, useGetAcademics } from "@app/hooks";
+import { AcademicInterface } from "@app/interfaces/Academic";
+import { useTranslation } from "react-i18next";
+import AcademicCreate from "../AcademicCreate/AcademicCreate";
+import AcademicUpdate from "../AcademicUpdate/AcademicUpdate";
+
+const AcademicList = () => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
@@ -30,65 +28,15 @@ const AccountList = () => {
 
   const navigate = useNavigate();
 
-  const [table, setTable] = useState({
-    page: 1,
-    take: 100,
-  });
-  const [filters, setFilters] = useState({
-    name: "",
-    courseId: "",
-  });
-
-  const paginateOptions: GetListParams = {
-    name: filters.name,
-    courseId: filters.courseId,
-    pageNumber: table.page,
-    pageSize: table.take,
-  };
-
-  const { data, isLoading, refetch } = useGetAccounts(paginateOptions);
-  const { mutate: onDeleteAccount } = useDeleteAccount();
-  const { data: dataDetail } = useGetAccount(id);
-
-  const handleTableChange = (pagination: any) => {
-    setTable({
-      page: pagination.current || 1,
-      take: pagination.pageSize || 100,
-    });
-  };
+  const { data, isLoading, refetch } = useGetAcademics();
+  const { mutate: onDeleteAcademicYear } = useDeleteAcademic();
+  const { data: dataDetail } = useGetAcademic(id);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
   }, []);
 
-  const handleClear = async (field: "name" | "courseId") => {
-    if (field === "name") {
-      await Promise.all([
-        setTable({
-          page: 1,
-          take: table.take,
-        }),
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          name: "",
-        })),
-      ]);
-    } else if (field === "courseId") {
-      await Promise.all([
-        setTable({
-          page: 1,
-          take: table.take,
-        }),
-        setFilters((prevFilters) => ({
-          ...prevFilters,
-          courseId: "",
-        })),
-      ]);
-    }
-    refetch();
-  };
-
-  const handleAction = (action: string, record: AccountsInterface) => {
+  const handleAction = (action: string, record: AcademicInterface) => {
     switch (action) {
       case "detail":
         navigate(`/accounts/${record.id}`);
@@ -96,12 +44,12 @@ const AccountList = () => {
       case "deleted":
         openModal(
           () => {
-            onDeleteAccount({ id: record.id });
+            onDeleteAcademicYear({ id: record.id });
           },
           ModalTypeEnum.CONFIRM,
           ICON_URL.ICON_TRASH,
-          t("MODAL.CONFIRM_DELETE", { name: record.username }),
-          t("MODAL.TITLE_DELETE", { name: record.username })
+          t("MODAL.CONFIRM_DELETE", { name: record.year }),
+          t("MODAL.TITLE_DELETE", { name: record.year })
         );
         break;
       case "update":
@@ -115,24 +63,18 @@ const AccountList = () => {
   ];
 
   const handleSearch = async () => {
-    await Promise.all([
-      setTable({
-        page: 1,
-        take: table.take,
-      }),
-      refetch(),
-    ]);
+    await Promise.all([refetch()]);
   };
 
   return (
     <ListPage
       page={breadcrumbItems}
-      title={t("BREADCRUMBS.ACCOUNTS")}
+      title={"Academic"}
       extra={
         <Space>
           <Button type="primary" onClick={() => showModal()}>
             <PlusOutlined />
-            Add new account
+            Add New Academic Year
           </Button>
         </Space>
       }
@@ -140,22 +82,22 @@ const AccountList = () => {
       <Row gutter={[8, 4]} className="px-15px py-1rem">
         <Col xs={24} sm={24} md={4}>
           <TextField
-            label={t("INPUT.NAME")}
+            label="Year"
             normalize={(value) => value.trim()}
             name="name"
           >
             <Input
-              placeholder={t("PLACEHOLDER.NAME")}
+              placeholder="Enter Year"
               allowClear
-              onChange={(e) => {
-                if (e.type === "click") {
-                  handleClear("name");
-                }
-                setFilters((prevFilters) => ({
-                  ...prevFilters,
-                  name: e.target.value,
-                }));
-              }}
+              //   onChange={(e) => {
+              //     if (e.type === "click") {
+              //       handleClear("name");
+              //     }
+              //     setFilters((prevFilters) => ({
+              //       ...prevFilters,
+              //       name: e.target.value,
+              //     }));
+              //   }}
             />
           </TextField>
         </Col>
@@ -173,19 +115,19 @@ const AccountList = () => {
           </Row>
         </Col>
       </Row>
-      <Table<AccountsInterface>
-        columns={AccountColumnsTable(handleAction)}
+      <Table<AcademicInterface>
+        columns={AcademicColumnsTable(handleAction)}
         loading={isLoading}
-        onChange={handleTableChange}
+        // onChange={handleTableChange}
         dataSource={data?.data || []}
         overflow={true}
       />
-      <AccountCreate
+      <AcademicCreate
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
       {id && (
-        <AccountUpdate
+        <AcademicUpdate
           isModalOpen={isModalDetailOpen}
           setIsModalOpen={setIsModalDetailOpen}
           dataDetail={dataDetail}
@@ -195,4 +137,4 @@ const AccountList = () => {
   );
 };
 
-export default AccountList;
+export default AcademicList;

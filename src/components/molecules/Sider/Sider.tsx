@@ -75,6 +75,11 @@ const Sider: FC = () => {
       label: t("SIDER.ACCOUNTS"),
     },
     {
+      key: "academics",
+      icon: <Icon icon={CalendarOutlined} />,
+      label: "Academic Year",
+    },
+    {
       key: "workshops",
       icon: <Icon icon={CalendarOutlined} />,
       label: t("SIDER.WORKSHOPS"),

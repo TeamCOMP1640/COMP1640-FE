@@ -26,6 +26,10 @@ const WorkshopDetail = lazy(
   () => import("@app/pages/Workshop/WorkshopDetail/WorkshopDetail")
 );
 
+const AcademicList = lazy(
+  () => import("@app/pages/Academics/AcademicList/AcademicList")
+);
+
 interface Route {
   element: JSX.Element;
   children?: Route[];
@@ -76,6 +80,15 @@ const routes = [
           {
             path: "",
             element: <GiftList />,
+          },
+        ],
+      },
+      {
+        path: "academics",
+        children: [
+          {
+            path: "",
+            element: <AcademicList />,
           },
         ],
       },
