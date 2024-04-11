@@ -10,6 +10,7 @@ import {
   AVATAR,
   REFRESH_TOKEN,
   USER_PROFILE,
+  ROLE,
 } from "@app/constant/auth";
 import {
   notificationError,
@@ -36,6 +37,7 @@ export const useLogin = () => {
         setStorageData(REFRESH_TOKEN, data.data.refreshToken);
         setStorageData(USER_PROFILE, data.data.name);
         setStorageData(AVATAR, data.data.avt);
+        setStorageData(ROLE, data.data.role);
         navigate("/");
       } else {
         notificationError(i18n.t("MESSAGE." + data.message));
@@ -47,21 +49,17 @@ export const useLogin = () => {
 export const useLogout = () => {
   const navigate = useNavigate();
   const dispatchAuth = useDispatch();
-  const { i18n } = useTranslation();
 
-  return useMutation({
-    mutationFn: async () => {
-      const { data } = await getLogout();
-      return data;
-    },
-    onSuccess: (data) => {
-      removeStorageData(ACCESS_TOKEN);
-      removeStorageData(REFRESH_TOKEN);
-      removeStorageData(USER_PROFILE);
-      removeStorageData(AVATAR);
-      dispatchAuth(logout());
-      notificationSuccess(i18n.t("MESSAGE." + data.message));
-      navigate("/");
-    },
-  });
+  const logoutFirst = () => {
+    removeStorageData(ACCESS_TOKEN);
+    removeStorageData(REFRESH_TOKEN);
+    removeStorageData(USER_PROFILE);
+    removeStorageData(AVATAR);
+    removeStorageData(ROLE);
+    dispatchAuth(logout());
+    notificationSuccess("Logout successfully");
+    navigate("/");
+  };
+
+  return logoutFirst;
 };

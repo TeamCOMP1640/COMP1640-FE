@@ -30,6 +30,8 @@ const AcademicList = lazy(
   () => import("@app/pages/Academics/AcademicList/AcademicList")
 );
 
+const FacultyList = lazy(() => import("@app/pages/Faculties/FacultyList"));
+
 interface Route {
   element: JSX.Element;
   children?: Route[];
@@ -89,6 +91,15 @@ const routes = [
           {
             path: "",
             element: <AcademicList />,
+          },
+        ],
+      },
+      {
+        path: "faculty",
+        children: [
+          {
+            path: "",
+            element: <FacultyList />,
           },
         ],
       },
