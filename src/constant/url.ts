@@ -13,4 +13,5 @@ export const API_URL = {
   SCORE: "/score",
   SYNC_COURSE: "/moodle/sync-data",
   ACADEMICS: "/academics",
+  FACULTIES: "/faculties",
 };

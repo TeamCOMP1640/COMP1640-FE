@@ -3,6 +3,7 @@ import {
   CalendarOutlined,
   FolderOutlined,
   GiftOutlined,
+  BankOutlined,
   RightOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
@@ -26,9 +27,10 @@ import { enIcon, logo, viIcon } from "@app/assets/images";
 import Icon from "@app/components/atoms/Icon/Icon";
 import { getLocalStorage } from "@app/config/storage";
 import { LOCALES, STORAGE_KEY } from "@app/constant";
-import { AVATAR, USER_PROFILE } from "@app/constant/auth";
+import { AVATAR, ROLE, USER_PROFILE } from "@app/constant/auth";
 import { useLogout } from "@app/hooks/useAuth";
 import "./Sider.scss";
+import { notificationSuccess } from "@app/helpers/notification";
 
 // type MenuProps = {
 //   key: string;
@@ -46,12 +48,21 @@ const Sider: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const role = getLocalStorage(ROLE);
+  console.log(role);
+
   useEffect(() => {
     const urlKey = location.pathname.split("/")[1];
     setMenuKey(urlKey);
   }, [location]);
 
-  const { mutate: handleLogout } = useLogout();
+  const logout = useLogout(); // Obtain the logout function from the useLogout hook
+
+  // Rest of the component code...
+
+  const handleLogout = () => {
+    logout(); // Call the logout function when the menu item is clicked
+  };
 
   const menuItems: DropdownProps["items"] = [
     {
@@ -59,32 +70,46 @@ const Sider: FC = () => {
       icon: <Icon icon={AppstoreOutlined} />,
       label: t("SIDER.DASHBOARD"),
     },
-    {
-      key: "courses",
-      icon: <Icon icon={FolderOutlined} />,
-      label: t("SIDER.COURSES"),
-    },
-    {
-      key: "gifts",
-      icon: <Icon icon={GiftOutlined} />,
-      label: t("SIDER.GIFTS"),
-    },
-    {
-      key: "accounts",
-      icon: <Icon icon={TeamOutlined} />,
-      label: t("SIDER.ACCOUNTS"),
-    },
-    {
-      key: "academics",
-      icon: <Icon icon={CalendarOutlined} />,
-      label: "Academic Year",
-    },
-    {
-      key: "workshops",
-      icon: <Icon icon={CalendarOutlined} />,
-      label: t("SIDER.WORKSHOPS"),
-    },
+    // {
+    //   key: "courses",
+    //   icon: <Icon icon={FolderOutlined} />,
+    //   label: t("SIDER.COURSES"),
+    // },
+    // {
+    //   key: "gifts",
+    //   icon: <Icon icon={GiftOutlined} />,
+    //   label: t("SIDER.GIFTS"),
+    // },
+
+    // {
+    //   key: "workshops",
+    //   icon: <Icon icon={CalendarOutlined} />,
+    //   label: t("SIDER.WORKSHOPS"),
+    // },
   ];
+
+  if (role === "admin") {
+    menuItems.push(
+      {
+        key: "accounts",
+        icon: <Icon icon={TeamOutlined} />,
+        label: t("SIDER.ACCOUNTS"),
+      },
+      {
+        key: "academics",
+        icon: <Icon icon={CalendarOutlined} />,
+        label: "Academic Year",
+      }
+    );
+  }
+
+  if (role === "marketing_manager") {
+    menuItems.push({
+      key: "faculty",
+      icon: <Icon icon={BankOutlined} />,
+      label: "Faculty Management",
+    });
+  }
 
   const handleChangeLanguage = async (value: string) => {
     localStorage.setItem(STORAGE_KEY.LOCALES, value);
@@ -183,10 +208,7 @@ const Sider: FC = () => {
       title: "",
       key: "4",
       label: (
-        <Typography
-          className="font-sm text-normal"
-          onClick={() => handleLogout()}
-        >
+        <Typography className="font-sm text-normal" onClick={handleLogout}>
           {t("SIDER.LOGOUT")}
         </Typography>
       ),

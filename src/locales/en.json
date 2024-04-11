@@ -8,7 +8,10 @@
     "ACCOUNT_DETAIL": "Detail Account",
     "GIFTS": "Gifts",
     "WORKSHOPS": "Workshops",
-    "WORKSHOP_DETAIL": "Detail Workshop"
+    "WORKSHOP_DETAIL": "Detail Workshop",
+    "FACULTY": "Faculty",
+    "ACADEMIC": "Academic Year",
+    "MAGAZINE": "Magazine"
   },
   "BUTTON": {
     "UPDATE": "Update",

@@ -32,6 +32,11 @@ const AcademicList = () => {
   const { mutate: onDeleteAcademicYear } = useDeleteAcademic();
   const { data: dataDetail } = useGetAcademic(id);
 
+  const [table, setTable] = useState({
+    page: 1,
+    take: 100,
+  });
+
   const showModal = useCallback(() => {
     setIsModalOpen(true);
   }, []);
@@ -118,6 +123,13 @@ const AcademicList = () => {
       <Table<AcademicInterface>
         columns={AcademicColumnsTable(handleAction)}
         loading={isLoading}
+        paginate={{
+          table,
+          setTable,
+          total: 1,
+          pageCount: 1,
+          // nameItemCount: "TOTAL_WORKSHOP",
+        }}
         // onChange={handleTableChange}
         dataSource={data?.data || []}
         overflow={true}

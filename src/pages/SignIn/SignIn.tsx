@@ -30,7 +30,7 @@ const SignIn = () => {
   const validator = [
     yupSync(
       yup.object().shape({
-        userName: yup
+        username: yup
           .string()
           .trim()
           .required(
@@ -93,7 +93,7 @@ const SignIn = () => {
                 <TextField
                   active={previousValue.userName !== "" ? true : false}
                   label={t("LOGIN.USERNAME")}
-                  name="userName"
+                  name="username"
                   rules={validator}
                   required
                   normalize={(value) => value.trim()}
