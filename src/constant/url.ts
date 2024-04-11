@@ -14,4 +14,5 @@ export const API_URL = {
   SYNC_COURSE: "/moodle/sync-data",
   ACADEMICS: "/academics",
   FACULTIES: "/faculties",
+  MAGAZINE: "/magazines",
 };

@@ -6,6 +6,7 @@ import {
   BankOutlined,
   RightOutlined,
   TeamOutlined,
+  ProjectOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -108,6 +109,14 @@ const Sider: FC = () => {
       key: "faculty",
       icon: <Icon icon={BankOutlined} />,
       label: "Faculty Management",
+    });
+  }
+
+  if (role === "marketing_coordinator") {
+    menuItems.push({
+      key: "magazine",
+      icon: <Icon icon={ProjectOutlined} />,
+      label: "Magazine Management",
     });
   }
 
