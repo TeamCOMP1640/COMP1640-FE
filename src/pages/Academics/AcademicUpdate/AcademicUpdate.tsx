@@ -64,8 +64,10 @@ const AcademicUpdate = ({
   }, [form, dataDetail]);
 
   const handleSubmit = async (value: any) => {
+    const { final_closure_date } = value;
+    const formattedDate = dayjs(final_closure_date).format("YYYY-MM-DD");
     await Promise.all([
-      handleUpdateAcademic({ ...value }),
+      handleUpdateAcademic({ ...value, final_closure_date: formattedDate }),
       setIsModalOpen(false),
       form.resetFields(),
     ]);

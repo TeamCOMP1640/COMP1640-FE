@@ -9,6 +9,7 @@ import i18n from "@app/config/i18n";
 import { yupSync } from "@app/helpers/yupSync";
 import { useCreateAcademic, useCreateAccount } from "@app/hooks";
 import { DATE_FORMAT } from "@app/constant/date-time";
+import dayjs from "dayjs";
 
 const AcademicCreate = ({
   isModalOpen,
@@ -42,8 +43,10 @@ const AcademicCreate = ({
   const { mutate: handleCreateAcademic, isPending } = useCreateAcademic();
 
   const handleSubmit = async (value: any) => {
+    const { final_closure_date } = value;
+    const formattedDate = dayjs(final_closure_date).format("YYYY-MM-DD");
     await Promise.all([
-      handleCreateAcademic({ ...value }),
+      handleCreateAcademic({ ...value, final_closure_date: formattedDate }),
       setIsModalOpen(false),
       form.resetFields(),
     ]);
