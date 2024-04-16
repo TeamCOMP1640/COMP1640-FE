@@ -7,10 +7,67 @@ import { useStatistic } from "@app/hooks/useDashboard";
 import { Col, Row, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
 
-const Dashboard = () => {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const Dashboard = () => {
   const { t } = useTranslation();
   const { data } = useStatistic();
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
+  const labels = [
+    "Graphic",
+    "Technical",
+    "Business",
+    "IOT",
+    "Language",
+    "Traveling",
+  ];
+
+  const dataChart = {
+    labels,
+    datasets: [
+      {
+        label: "The number of articles",
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+      // {
+      //   label: "Dataset 2",
+      //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
+    ],
+  };
 
   const { data: courses, isLoading: isLoadingCourses } =
     useGetCourseNoPaginate();
@@ -36,10 +93,10 @@ const Dashboard = () => {
                 className="flex justify-center flex-col"
               >
                 <Typography className="text-text-color-2 font-semibold pb-1rem">
-                  {t("SIDER.COURSES")}
+                  {/* {t("SIDER.COURSES")} */} Falcuty
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {data?.courses}
+                  {/* {data?.courses} */} 10
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">
@@ -59,10 +116,10 @@ const Dashboard = () => {
                 className="flex justify-center flex-col"
               >
                 <Typography className="text-text-color-2 font-semibold pb-1rem">
-                  {t("TEAM.MENTEES")}
+                  {/* {t("TEAM.MENTEES")} */} Student
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {data?.mentees}
+                  {data?.mentees} 20
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">
@@ -82,10 +139,10 @@ const Dashboard = () => {
                 className="flex justify-center flex-col"
               >
                 <Typography className="text-text-color-2 font-semibold pb-1rem">
-                  {t("TEAM.MENTORS")}
+                  {/* {t("TEAM.MENTORS")} */} Article
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {data?.mentors}
+                  {/* {data?.mentors} */} 30
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">
@@ -95,10 +152,21 @@ const Dashboard = () => {
           </Card>
         </Col>
       </Row>
-
       {courses && (
         <LeaderBoard courses={courses} isLoadingCourses={isLoadingCourses} />
       )}
+      <Bar
+        options={options}
+        data={dataChart}
+        style={{
+          maxWidth: "800px",
+          maxHeight: "400px",
+          width: "100%",
+          height: "auto",
+          marginTop: 30,
+        }}
+      />
+      ;
     </>
   );
 };

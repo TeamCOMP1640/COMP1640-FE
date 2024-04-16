@@ -14,4 +14,6 @@ export enum BREADCRUMBS_ENUM {
   GIFTS = "gifts",
   WORKSHOPS = "workshops",
   WORKSHOP_DETAIL = "workshop_detail",
+  FACULTY = "Faculty",
+  MAGAZINE = "Magazine",
 }

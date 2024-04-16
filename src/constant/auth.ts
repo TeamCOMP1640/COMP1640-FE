@@ -3,6 +3,8 @@ const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
 const USER_PROFILE = "user";
 const AVATAR = "avatar";
+const ROLE = "role";
+const ID = "id";
 
 const AUTH_ACTION_KEY = {
   SET_NOT_AUTH: "SET_NOT_AUTH",
@@ -17,4 +19,6 @@ export {
   USER_PROFILE,
   EXP,
   AVATAR,
+  ROLE,
+  ID
 };
