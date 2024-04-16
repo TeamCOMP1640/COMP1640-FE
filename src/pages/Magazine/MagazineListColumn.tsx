@@ -1,4 +1,8 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { ColumnsType } from "antd/lib/table";
 import { Translation } from "react-i18next";
 
@@ -10,7 +14,8 @@ import { FacultyInterface } from "@app/interfaces/Faculty";
 import { MagazineInterface } from "@app/interfaces/Magazine";
 
 export const MagazineColumnsTable = (
-  handleAction: (key: string, item: MagazineInterface) => void
+  handleAction: (key: string, item: MagazineInterface) => void,
+  role: string
 ): ColumnsType<MagazineInterface> => [
   {
     title: "Name",
@@ -43,20 +48,32 @@ export const MagazineColumnsTable = (
     width: 100,
     render: (_text, record) => (
       <Space>
-        <ButtonAction
-          variant="primary"
-          tooltip={i18n.t("ACTION.EDIT")}
-          handleAction={() => handleAction("update", record)}
-        >
-          <EditOutlined />
-        </ButtonAction>
-        <ButtonAction
-          variant="danger"
-          handleAction={() => handleAction("deleted", record)}
-          tooltip={i18n.t("ACTION.DELETE")}
-        >
-          <DeleteOutlined />
-        </ButtonAction>
+        {role === "student" ? (
+          <ButtonAction
+            variant="success"
+            handleAction={() => handleAction("detail", record)}
+            tooltip={i18n.t("ACTION.DETAILS")}
+          >
+            <SearchOutlined />
+          </ButtonAction>
+        ) : (
+          <>
+            <ButtonAction
+              variant="primary"
+              tooltip={i18n.t("ACTION.EDIT")}
+              handleAction={() => handleAction("update", record)}
+            >
+              <EditOutlined />
+            </ButtonAction>
+            <ButtonAction
+              variant="danger"
+              handleAction={() => handleAction("deleted", record)}
+              tooltip={i18n.t("ACTION.DELETE")}
+            >
+              <DeleteOutlined />
+            </ButtonAction>
+          </>
+        )}
       </Space>
     ),
   },

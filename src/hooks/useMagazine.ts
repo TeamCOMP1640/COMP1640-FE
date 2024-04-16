@@ -3,6 +3,7 @@ import {
   deleteMagazine,
   getMagazine,
   getMagazines,
+  getStudentMagazines,
   updateMagazine,
 } from "@app/apis/magazine.api";
 import { QUERY_KEY } from "@app/constant/query-key";
@@ -13,11 +14,21 @@ import {
 import { MagazineCreateInterface } from "@app/interfaces/Magazine";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useGetMagazines = () => {
+export const useGetMagazines = (id: string) => {
   return useQuery({
     queryKey: [QUERY_KEY.MAGAZINE],
     queryFn: async () => {
-      const { data } = await getMagazines();
+      const { data } = await getMagazines(id);
+      return data;
+    },
+  });
+};
+
+export const useGetStudentMagazines = (id: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.MAGAZINE],
+    queryFn: async () => {
+      const { data } = await getStudentMagazines(id);
       return data;
     },
   });

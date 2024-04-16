@@ -3,7 +3,11 @@ import {} from "@app/interfaces";
 import { MagazineCreateInterface } from "@app/interfaces/Magazine";
 import axios from "axios";
 
-export const getMagazines = () => axios.get(API_URL.MAGAZINE);
+export const getMagazines = (id: string) =>
+  axios.get(`${API_URL.MAGAZINE}/list/${id}`);
+
+export const getStudentMagazines = (id: string) =>
+  axios.get(`${API_URL.MAGAZINE}/student/${id}`);
 
 export const createMagazine = (params: MagazineCreateInterface) =>
   axios.post(`${API_URL.MAGAZINE}/create`, params);
