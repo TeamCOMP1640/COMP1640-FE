@@ -21,12 +21,18 @@ import { useTranslation } from "react-i18next";
 import FacultyCreate from "./FacultyCreate";
 import { FacultyColumnsTable } from "./FacultyListColumn";
 import FacultyUpdate from "./FacultyUpdate";
+import { getLocalStorage } from "@app/config/storage";
+import { ROLE } from "@app/constant/auth";
+import FacultyAssign from "./FacultyAssign";
 
 const FacultyList = () => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpenAssign, setIsModalOpenAssign] = useState<boolean>(false);
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
   const [id, setId] = useState<string>("");
+
+  const role = getLocalStorage(ROLE);
 
   const [table, setTable] = useState({
     page: 1,
@@ -61,6 +67,9 @@ const FacultyList = () => {
         break;
       case "update":
         Promise.all([setIsModalDetailOpen(true), setId(record.id)]);
+        break;
+      case "assign":
+        Promise.all([setIsModalOpenAssign(true), setId(record.id)]);
         break;
     }
   };
@@ -111,7 +120,7 @@ const FacultyList = () => {
         </Col>
       </Row>
       <Table<FacultyInterface>
-        columns={FacultyColumnsTable(handleAction)}
+        columns={FacultyColumnsTable(handleAction, role || "")}
         loading={isLoading}
         // onChange={handleTableChange}
         paginate={{
@@ -128,6 +137,13 @@ const FacultyList = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
+      {id && (
+        <FacultyAssign
+          isModalOpen={isModalOpenAssign}
+          setIsModalOpen={setIsModalOpenAssign}
+          dataDetail={dataDetail}
+        />
+      )}
       {id && (
         <FacultyUpdate
           isModalOpen={isModalDetailOpen}

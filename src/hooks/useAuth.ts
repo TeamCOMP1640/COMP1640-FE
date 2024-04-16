@@ -11,6 +11,7 @@ import {
   REFRESH_TOKEN,
   USER_PROFILE,
   ROLE,
+  ID,
 } from "@app/constant/auth";
 import {
   notificationError,
@@ -38,6 +39,7 @@ export const useLogin = () => {
         setStorageData(USER_PROFILE, data.data.name);
         setStorageData(AVATAR, data.data.avt);
         setStorageData(ROLE, data.data.role);
+        setStorageData(ID, data.data.id);
         navigate("/");
       } else {
         notificationError(i18n.t("MESSAGE." + data.message));
@@ -56,6 +58,7 @@ export const useLogout = () => {
     removeStorageData(USER_PROFILE);
     removeStorageData(AVATAR);
     removeStorageData(ROLE);
+    removeStorageData(ID);
     dispatchAuth(logout());
     notificationSuccess("Logout successfully");
     navigate("/");

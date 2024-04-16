@@ -23,10 +23,12 @@ const MagazineUpdate = ({
   isModalOpen,
   setIsModalOpen,
   dataDetail,
+  facultyName,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   dataDetail?: MagazineInterface;
+  facultyName: FacultyInterface;
 }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -73,7 +75,7 @@ const MagazineUpdate = ({
         name: dataDetail.name,
         description: dataDetail.description,
         closure_date: dayjs(dataDetail.closure_date),
-        faculty_id: [dataDetail?.faculty?.id],
+        faculty_id: [facultyName?.id],
       }
     : {};
 
@@ -89,7 +91,7 @@ const MagazineUpdate = ({
     const { closure_date } = value;
     const formattedDate = dayjs(closure_date).format("YYYY-MM-DD");
     await Promise.all([
-      handleUpdateMagazine({ ...value, closure_date: formattedDate }),
+      handleUpdateMagazine({ ...value, closure_date: formattedDate, faculty_id: Number(facultyName?.id) }),
       setIsModalOpen(false),
       form.resetFields(),
     ]);
@@ -156,6 +158,7 @@ const MagazineUpdate = ({
                 >
                   <Select
                     allowClear
+                    disabled
                     style={{ width: "100%" }}
                     placeholder="Select Faculty"
                     filterOption={filterOption}

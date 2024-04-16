@@ -34,6 +34,12 @@ const FacultyList = lazy(() => import("@app/pages/Faculties/FacultyList"));
 
 const MagazineList = lazy(() => import("@app/pages/Magazine/MagazineList"));
 
+const MagazineStudentList = lazy(
+  () => import("@app/pages/Magazine/MagazineStudentList")
+);
+
+const MagazineDetail = lazy(() => import("@app/pages/Magazine/MagazineDetail"));
+
 interface Route {
   element: JSX.Element;
   children?: Route[];
@@ -102,6 +108,19 @@ const routes = [
           {
             path: "",
             element: <MagazineList />,
+          },
+        ],
+      },
+      {
+        path: "student-magazine",
+        children: [
+          {
+            path: "",
+            element: <MagazineStudentList />,
+          },
+          {
+            path: ":id",
+            element: <MagazineDetail />,
           },
         ],
       },

@@ -1,5 +1,8 @@
 import { API_URL } from "@app/constant/url";
-import { FacultyCreateInterface } from "@app/interfaces/Faculty";
+import {
+  AssignStudentParams,
+  FacultyCreateInterface,
+} from "@app/interfaces/Faculty";
 import axios from "axios";
 
 export const getFaculties = () => axios.get(API_URL.FACULTIES);
@@ -15,3 +18,6 @@ export const getFaculty = (id: string) =>
 
 export const updateFaculty = (id: string, params: FacultyCreateInterface) =>
   axios.patch(`${API_URL.FACULTIES}/update/${id}`, params);
+
+export const assignStudent = (id: string, params: AssignStudentParams) =>
+  axios.post(`${API_URL.FACULTIES}/student/${id}/${params.userId}`, params);

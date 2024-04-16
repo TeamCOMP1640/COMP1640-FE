@@ -4,13 +4,17 @@ import {
   updateFaculty,
   getFaculty,
   deleteFaculty,
+  assignStudent,
 } from "@app/apis/faculty.api";
 import { QUERY_KEY } from "@app/constant/query-key";
 import {
   notificationError,
   notificationSuccess,
 } from "@app/helpers/notification";
-import { FacultyCreateInterface } from "@app/interfaces/Faculty";
+import {
+  AssignStudentParams,
+  FacultyCreateInterface,
+} from "@app/interfaces/Faculty";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetFaculties = () => {
@@ -76,7 +80,27 @@ export const useDeleteFaculty = () => {
       notificationSuccess(data.message);
     },
     onError: (data) => {
-      notificationError(data.message);
+      notificationError("Cannot delete active faculty");
+    },
+  });
+};
+
+export const useAssignStudent = (id: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (params: AssignStudentParams) => {
+      const response = await assignStudent(id, params);
+
+      return response.data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.FACULTY],
+      });
+      notificationSuccess(data.message);
+    },
+    onError: (data) => {
+      notificationError("Cannot assign this student to faculty");
     },
   });
 };

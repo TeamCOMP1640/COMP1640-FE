@@ -18,9 +18,11 @@ import dayjs from "dayjs";
 const MagazineCreate = ({
   isModalOpen,
   setIsModalOpen,
+  facultyName,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
+  facultyName: FacultyInterface;
 }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -50,13 +52,21 @@ const MagazineCreate = ({
   const handleSubmit = async (value: any) => {
     const { closure_date } = value;
     const formattedDate = dayjs(closure_date).format("YYYY-MM-DD");
-    console.log(value, "kekekekekeke");
+
     await Promise.all([
-      handleCreateMagazine({ ...value, closure_date: formattedDate }),
+      handleCreateMagazine({
+        ...value,
+        closure_date: formattedDate,
+        faculty_id: Number(facultyName?.id),
+      }),
       setIsModalOpen(false),
       form.resetFields(),
     ]);
   };
+
+  const initialValues = { faculty_id: [facultyName?.id] };
+
+  console.log(facultyName?.id);
 
   const filterOption = (
     input: string,
@@ -80,6 +90,7 @@ const MagazineCreate = ({
         id="form-applications"
         labelAlign="left"
         wrapperCol={{ span: 24 }}
+        initialValues={initialValues}
       >
         <Row gutter={[8, 8]} className="px-15px py-1rem">
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -116,13 +127,11 @@ const MagazineCreate = ({
             >
               <Select
                 allowClear
+                disabled
                 style={{ width: "100%" }}
                 placeholder="Select Faculty"
                 filterOption={filterOption}
-                options={dataFaculties?.data.map((item: FacultyInterface) => ({
-                  value: item.id,
-                  label: item.name,
-                }))}
+                options={[{ label: facultyName?.name, value: facultyName?.id }]}
               />
             </TextField>
           </Col>

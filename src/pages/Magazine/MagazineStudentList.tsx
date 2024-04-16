@@ -6,7 +6,7 @@ import { TextField } from "@app/components/atoms/TextField/TextField";
 import { openModal } from "@app/components/molecules/ModalConfirm/OpenModal";
 import { ModalTypeEnum, STORAGE_KEY } from "@app/constant";
 import { ICON_URL } from "@app/constant/url-image";
-import { IBreadcrumbItem } from "@app/interfaces";
+import { BREADCRUMBS_ENUM, IBreadcrumbItem } from "@app/interfaces";
 import { Col, Input, Row, Space } from "antd";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ import {
   useDeleteMagazine,
   useGetMagazine,
   useGetMagazines,
+  useGetStudentMagazines,
 } from "@app/hooks/useMagazine";
 import MagazineCreate from "./MagazineCreate";
 import MagazineUpdate from "./MagazineUpdate";
@@ -32,7 +33,7 @@ import { useGetAccount } from "@app/hooks";
 import { ID, ROLE } from "@app/constant/auth";
 import { getLocalStorage } from "@app/config/storage";
 
-const MagazineList = () => {
+const MagazineStudentList = () => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
@@ -51,7 +52,9 @@ const MagazineList = () => {
 
   const facultyName = userDetail?.faculties[0];
 
-  const { data, isLoading, refetch } = useGetMagazines(facultyName?.id);
+  const { data, isLoading, refetch } = useGetStudentMagazines(
+    getLocalStorage(ID) || ""
+  );
   const { mutate: onDeleteAcademicYear } = useDeleteMagazine();
   const { data: dataDetail } = useGetMagazine(id);
 
@@ -62,7 +65,7 @@ const MagazineList = () => {
   const handleAction = (action: string, record: MagazineInterface) => {
     switch (action) {
       case "detail":
-        navigate(`/magazines-student/${record.id}`);
+        navigate(`/student-magazine/${record.id}`);
         break;
       case "deleted":
         openModal(
@@ -82,7 +85,7 @@ const MagazineList = () => {
   };
 
   const breadcrumbItems: IBreadcrumbItem[] = [
-    { key: "Magazine", name: "Faculty" },
+    { key: BREADCRUMBS_ENUM.MAGAZINE, name: "Faculty" },
   ];
 
   const handleSearch = async () => {
@@ -90,18 +93,7 @@ const MagazineList = () => {
   };
 
   return (
-    <ListPage
-      page={breadcrumbItems}
-      title={"Magazine"}
-      extra={
-        <Space>
-          <Button type="primary" onClick={() => showModal()}>
-            <PlusOutlined />
-            Add New Magazine
-          </Button>
-        </Space>
-      }
-    >
+    <ListPage page={breadcrumbItems} title={"My Magazine"}>
       <Row gutter={[8, 4]} className="px-15px py-1rem">
         <Col xs={24} sm={24} md={4}>
           <TextField
@@ -157,4 +149,4 @@ const MagazineList = () => {
   );
 };
 
-export default MagazineList;
+export default MagazineStudentList;

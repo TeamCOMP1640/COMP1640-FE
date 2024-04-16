@@ -1,3 +1,5 @@
+import { FacultyInterface } from "./Faculty";
+
 export interface AccountsInterface {
   id: string;
   fullname: string;
@@ -6,6 +8,7 @@ export interface AccountsInterface {
   phone: string;
   username: string;
   password: string;
+  faculties: FacultyInterface[];
 }
 
 export interface AccountCreate {

@@ -120,6 +120,19 @@ const Sider: FC = () => {
     });
   }
 
+  if (role === "student") {
+    menuItems.push({
+      key: "faculty",
+      icon: <Icon icon={BankOutlined} />,
+      label: "Faculty Management",
+    });
+    menuItems.push({
+      key: "student-magazine",
+      icon: <Icon icon={ProjectOutlined} />,
+      label: "My Magazine",
+    });
+  }
+
   const handleChangeLanguage = async (value: string) => {
     localStorage.setItem(STORAGE_KEY.LOCALES, value);
     await i18n.changeLanguage(value);
