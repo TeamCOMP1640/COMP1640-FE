@@ -87,12 +87,14 @@ const FacultyList = () => {
       page={breadcrumbItems}
       title={"Faculty"}
       extra={
-        <Space>
-          <Button type="primary" onClick={() => showModal()}>
-            <PlusOutlined />
-            Add New Faculty
-          </Button>
-        </Space>
+        role === "marketing_manager" && (
+          <Space>
+            <Button type="primary" onClick={() => showModal()}>
+              <PlusOutlined />
+              Add New Faculty
+            </Button>
+          </Space>
+        )
       }
     >
       <Row gutter={[8, 4]} className="px-15px py-1rem">

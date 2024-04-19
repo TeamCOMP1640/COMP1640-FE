@@ -42,7 +42,9 @@
     "COURSE_CREATE": "Course create",
     "TITLE_DELETE": "Delete {{name}}",
     "CONFIRM_DELETE": "Are you sure you want to delete {{name}}",
-    "CREATE": "Create"
+    "CREATE": "Create",
+    "TITLE_PUBLICATION": "Publication {{name}}",
+    "CONFIRM_PUBLICATION": "Are you sure you want to publication {{name}}"
   },
   "LANGUAGES": {
     "VI": "Vietnamese",

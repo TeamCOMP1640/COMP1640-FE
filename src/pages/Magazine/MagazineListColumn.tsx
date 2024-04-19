@@ -59,6 +59,13 @@ export const MagazineColumnsTable = (
         ) : (
           <>
             <ButtonAction
+              variant="success"
+              handleAction={() => handleAction("detail_coordinator", record)}
+              tooltip={i18n.t("ACTION.DETAILS")}
+            >
+              <SearchOutlined />
+            </ButtonAction>
+            <ButtonAction
               variant="primary"
               tooltip={i18n.t("ACTION.EDIT")}
               handleAction={() => handleAction("update", record)}

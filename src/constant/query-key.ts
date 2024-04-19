@@ -13,4 +13,5 @@ export const QUERY_KEY = {
   SYNC: "SYNC",
   FACULTY: "FACULTY",
   MAGAZINE: "MAGAZINE",
+  ARTICLE: "ARTICLE",
 };
