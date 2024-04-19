@@ -28,20 +28,21 @@ import { useCallback, useState } from "react";
 import { useGetAccount } from "@app/hooks";
 import { getLocalStorage } from "@app/config/storage";
 import { ID, ROLE } from "@app/constant/auth";
+import ArticleComment from "./Article/ArticleComment";
 // import { WorkshopDetailColumnsTable } from "./WorkshopDetailColumn";
 
-const MagazineDetail = () => {
+const MagazineDetailCoordinator = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalCommentOpen, setIsModalCommentOpen] = useState<boolean>(false);
   const { data: articleDatas } = useGetArticles();
-  const role = getLocalStorage(ROLE);
 
-  console.log(articleDatas, "hehels");
   const { mutate: onDeleteWorkshop } = useDeleteWorkshop();
   const navigate = useNavigate();
   const { data: userDetail } = useGetAccount(getLocalStorage(ID) || "");
+  const role = getLocalStorage(ROLE) || "";
 
   const facultyName = userDetail?.faculties[0];
   const breadcrumbItems: IBreadcrumbItem[] = [
@@ -68,6 +69,20 @@ const MagazineDetail = () => {
         //   t("MODAL.CONFIRM_DELETE", { name: record.name }),
         //   t("MODAL.TITLE_DELETE", { name: record.name })
         // );
+        break;
+      case "publication":
+        openModal(
+          () => {
+            // onDeleteAcademicYear({ id: record.id });
+          },
+          ModalTypeEnum.CONFIRM,
+          ICON_URL.ICON_SUCCESS,
+          t("MODAL.CONFIRM_PUBLICATION", { name: record.title }),
+          t("MODAL.TITLE_PUBLICATION", { name: record.title })
+        );
+        break;
+      case "comment":
+        setIsModalCommentOpen(true);
         break;
       case "update":
         // Promise.all([setIsModalDetailOpen(true), setId(record.id)]);
@@ -227,21 +242,16 @@ const MagazineDetail = () => {
         setIsModalOpen={setIsModalOpen}
         facultyName={facultyName}
       />
-      {!data?.completed_feedback && (
-        <Row justify="end" className="w-full pb-1rem pr-24px">
-          <Col>
-            <Button type="primary" onClick={() => showModal()}>
-              Submit Article
-            </Button>
-          </Col>
-        </Row>
-      )}
+      <ArticleComment
+        isModalOpen={isModalCommentOpen}
+        setIsModalOpen={setIsModalCommentOpen}
+      />
       <Table
-        columns={MagazineDetailColumnTable(handleAction, role || "")}
+        columns={MagazineDetailColumnTable(handleAction, role)}
         dataSource={articleDatas?.data || []}
       />
     </ListPage>
   );
 };
 
-export default MagazineDetail;
+export default MagazineDetailCoordinator;

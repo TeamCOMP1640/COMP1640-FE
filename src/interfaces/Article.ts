@@ -10,3 +10,14 @@ export interface ArticleInterface {
   magazine: MagazineInterface;
   users: AccountsInterface[];
 }
+
+export interface ArticleCreateInterface {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  submitted_date: Date;
+  file: FormData;
+  // magazine: MagazineInterface;
+  // users: AccountsInterface[];
+}

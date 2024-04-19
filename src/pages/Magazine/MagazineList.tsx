@@ -39,8 +39,6 @@ const MagazineList = () => {
   const [id, setId] = useState<string>("");
   const role = getLocalStorage(ROLE);
 
-  console.log(role);
-
   const [table, setTable] = useState({
     page: 1,
     take: 100,
@@ -63,6 +61,9 @@ const MagazineList = () => {
     switch (action) {
       case "detail":
         navigate(`/magazines-student/${record.id}`);
+        break;
+      case "detail_coordinator":
+        navigate(`/magazine/${record.id}`);
         break;
       case "deleted":
         openModal(

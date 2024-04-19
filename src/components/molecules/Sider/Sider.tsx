@@ -3,6 +3,7 @@ import {
   CalendarOutlined,
   FolderOutlined,
   GiftOutlined,
+  StarOutlined,
   BankOutlined,
   RightOutlined,
   TeamOutlined,
@@ -130,6 +131,14 @@ const Sider: FC = () => {
       key: "student-magazine",
       icon: <Icon icon={ProjectOutlined} />,
       label: "My Magazine",
+    });
+  }
+
+  if (role === "guest") {
+    menuItems.push({
+      key: "publication",
+      icon: <Icon icon={StarOutlined} />,
+      label: "View Publication Article",
     });
   }
 
