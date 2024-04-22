@@ -13,7 +13,7 @@ const axiosInstance = axios.create();
 axios.defaults.baseURL =
   location.origin.includes("127.0.0.1") || location.origin.includes("localhost")
     ? "http://localhost:8080"
-    : `${location.origin}/api`;
+    : "https://28e5-171-251-31-38.ngrok-free.app";
 
 axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (config.url === API_URL.LOGIN) {
