@@ -35,6 +35,8 @@ axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
 
+  config.headers["ngrok-skip-browser-warning"] = 69420;
+
   return config;
 });
 
