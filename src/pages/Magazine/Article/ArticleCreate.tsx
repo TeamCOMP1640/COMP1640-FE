@@ -67,20 +67,28 @@ const ArticleCreate = ({
       notificationError("Can't submit if not agree with term");
       return;
     }
-    const { image } = value;
+    const { image, wordFile } = value;
 
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", image?.file);
+    formData.append("wordFile", wordFile?.file);
+    value = {
+      ...value,
+      submitted_date: formattedDate,
+      magazine_id: id,
+      status: "Not Publication",
+      user_id: getLocalStorage(ID),
+    };
+
+    Object.keys(value).forEach((key) => {
+      formData.append(key, value[key]);
+    });
+
     await Promise.all([
-      handleCreateArticle({
-        ...value,
-        submitted_date: formattedDate,
-        magazine_id: id,
-        status: "Not Publication",
-        user_id: getLocalStorage(ID),
-      }),
+      handleCreateArticle(formData),
       setIsModalOpen(false),
       form.resetFields(),
+      setCheckTerm(false),
     ]);
   };
 
@@ -97,7 +105,7 @@ const ArticleCreate = ({
 
   return (
     <Modal
-      title="Submit Comment"
+      title="Submit Article"
       open={isModalOpen}
       onOk={form.submit}
       onCancel={() => {

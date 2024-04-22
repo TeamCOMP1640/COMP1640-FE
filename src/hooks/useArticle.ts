@@ -26,7 +26,7 @@ export const useGetArticles = () => {
 export const useCreateArticle = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (params: ArticleCreateInterface) => {
+    mutationFn: async (params: FormData) => {
       const response = await createArticle(params);
 
       return response.data;

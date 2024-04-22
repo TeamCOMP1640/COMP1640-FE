@@ -43,7 +43,8 @@ const FacultyList = () => {
 
   const { data, isLoading, refetch } = useGetFaculties();
   const { mutate: onDeleteAcademicYear } = useDeleteFaculty();
-  const { data: dataDetail } = useGetFaculty(id);
+  const { data: dataDetail } = useGetFaculty(id, "marketing_coordinator");
+  const { data: dataDetailGuest } = useGetFaculty(id, "guest");
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -104,7 +105,7 @@ const FacultyList = () => {
             normalize={(value) => value.trim()}
             name="name"
           >
-            <Input placeholder="Enter Year" allowClear />
+            <Input placeholder="Enter Faculty" allowClear />
           </TextField>
         </Col>
 
@@ -150,7 +151,9 @@ const FacultyList = () => {
         <FacultyUpdate
           isModalOpen={isModalDetailOpen}
           setIsModalOpen={setIsModalDetailOpen}
-          dataDetail={dataDetail}
+          dataDetail={dataDetail || null}
+          dataDetailGuest={dataDetailGuest || null}
+          id={id}
         />
       )}
     </ListPage>

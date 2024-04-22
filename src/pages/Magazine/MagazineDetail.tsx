@@ -37,6 +37,7 @@ const MagazineDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data: articleDatas } = useGetArticles();
   const role = getLocalStorage(ROLE);
+  const today = new Date().toISOString().slice(0, 10);
 
   console.log(articleDatas, "hehels");
   const { mutate: onDeleteWorkshop } = useDeleteWorkshop();
@@ -48,6 +49,8 @@ const MagazineDetail = () => {
     { key: BREADCRUMBS_ENUM.MAGAZINE, name: "Magazines" },
     { key: BREADCRUMBS_ENUM.MAGAZINE, name: "Detail" },
   ];
+
+  console.log(today > data?.closure_date, "yesno", today, data?.closure_date);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -86,6 +89,20 @@ const MagazineDetail = () => {
       t("MODAL.CONFIRM_DELETE", { name: data?.title }),
       t("MODAL.TITLE_DELETE", { name: data?.title })
     );
+  };
+
+  const checkDate = (dateInput: string) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const inputDate = new Date(dateInput);
+    inputDate.setHours(0, 0, 0, 0);
+
+    if (today.getTime() > inputDate.getTime()) {
+      return false;
+    } else if (today.getTime() <= inputDate.getTime()) {
+      return true;
+    }
   };
 
   return (
@@ -222,12 +239,14 @@ const MagazineDetail = () => {
           </Col>
         </Row>
       </Card>
+
       <ArticleCreate
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         facultyName={facultyName}
       />
-      {!data?.completed_feedback && (
+
+      {checkDate(data?.closure_date) ? (
         <Row justify="end" className="w-full pb-1rem pr-24px">
           <Col>
             <Button type="primary" onClick={() => showModal()}>
@@ -235,7 +254,7 @@ const MagazineDetail = () => {
             </Button>
           </Col>
         </Row>
-      )}
+      ) : null}
       <Table
         columns={MagazineDetailColumnTable(handleAction, role || "")}
         dataSource={articleDatas?.data || []}

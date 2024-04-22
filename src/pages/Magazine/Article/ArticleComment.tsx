@@ -95,7 +95,7 @@ const ArticleComment = ({
 
   return (
     <Modal
-      title="Submit Article"
+      title="Submit Comment"
       open={isModalOpen}
       onOk={form.submit}
       onCancel={() => {

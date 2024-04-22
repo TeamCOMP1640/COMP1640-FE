@@ -18,10 +18,14 @@ const FacultyUpdate = ({
   isModalOpen,
   setIsModalOpen,
   dataDetail,
+  dataDetailGuest,
+  id,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   dataDetail?: FacultyInterface;
+  dataDetailGuest?: FacultyInterface;
+  id: string;
 }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -68,14 +72,24 @@ const FacultyUpdate = ({
     data: dataAccounts,
     isLoading,
     refetch,
-  } = useGetAccounts({ ...paginateOptions, role: "marketing_coordinator" });
-  console.log(dataAccounts);
+  } = useGetAccounts({
+    ...paginateOptions,
+    role: "marketing_coordinator",
+    facultyId: Number(id),
+  });
+
+  const { data: dataGuests } = useGetAccounts({
+    ...paginateOptions,
+    role: "guest",
+    facultyId: Number(id),
+  });
 
   const initialValues = dataDetail
     ? {
         name: dataDetail.name,
         enrolment_key: dataDetail.enrolment_key,
-        users: dataDetail?.users.map((user) => user.id) ?? [],
+        users: dataDetail?.users?.map((user) => user.id) ?? [],
+        guests: dataDetailGuest?.users?.map((user) => user.id) ?? [],
       }
     : {};
 
@@ -88,7 +102,6 @@ const FacultyUpdate = ({
   }, [form, dataDetail]);
 
   const handleSubmit = async (value: any) => {
-    console.log(value, "hello");
     await Promise.all([
       handleUpdateFaculty({ ...value }),
       setIsModalOpen(false),
@@ -146,12 +159,35 @@ const FacultyUpdate = ({
                     style={{ width: "100%" }}
                     placeholder="Marketing Coordinator"
                     filterOption={filterOption}
-                    options={dataAccounts?.data.map(
-                      (item: AccountsInterface) => ({
-                        value: item.id,
-                        label: item.fullname,
-                      })
-                    )}
+                    options={
+                      dataAccounts
+                        ? dataAccounts?.data?.map(
+                            (item: AccountsInterface) => ({
+                              value: item.id,
+                              label: item.fullname,
+                            })
+                          )
+                        : []
+                    }
+                  />
+                </TextField>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <TextField label="Guest" name="guests">
+                  <Select
+                    mode="multiple"
+                    allowClear
+                    style={{ width: "100%" }}
+                    placeholder="Guest"
+                    filterOption={filterOption}
+                    options={
+                      dataGuests
+                        ? dataGuests?.data?.map((item: AccountsInterface) => ({
+                            value: item.id,
+                            label: item.fullname,
+                          }))
+                        : []
+                    }
                   />
                 </TextField>
               </Col>
