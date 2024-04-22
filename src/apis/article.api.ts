@@ -8,12 +8,8 @@ import axios from "axios";
 
 export const getArticles = () => axios.get(API_URL.ARTICLE);
 
-export const createArticle = (params: ArticleCreateInterface) =>
-  axios.post(`${API_URL.ARTICLE}/create`, params, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const createArticle = (params: FormData) =>
+  axios.post(`${API_URL.ARTICLE}/create`, params);
 
 export const deleteArticle = (id: string) =>
   axios.delete(`${API_URL.ARTICLE}/delete/${id}`);

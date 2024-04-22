@@ -17,7 +17,6 @@ export interface ArticleCreateInterface {
   description: string;
   status: string;
   submitted_date: Date;
-  file: FormData;
   // magazine: MagazineInterface;
   // users: AccountsInterface[];
 }

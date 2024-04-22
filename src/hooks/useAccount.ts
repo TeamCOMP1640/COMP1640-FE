@@ -17,9 +17,17 @@ import { GetListParams } from "@app/interfaces/common";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-export const useGetAccounts = (params: GetListParams) => {
+export const useGetAccounts = (
+  params: GetListParams & { role: string; facultyId?: number }
+) => {
   return useQuery({
-    queryKey: [QUERY_KEY.ACCOUNT, params.pageNumber, params.pageSize],
+    queryKey: [
+      QUERY_KEY.ACCOUNT,
+      params.pageNumber,
+      params.pageSize,
+      params.role,
+      params.facultyId,
+    ],
     queryFn: async () => {
       const { data } = await getAccounts(params);
       return data;

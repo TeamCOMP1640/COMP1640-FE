@@ -105,11 +105,11 @@ export const useAssignStudent = (id: string) => {
   });
 };
 
-export const useGetFaculty = (id: string) => {
+export const useGetFaculty = (id: string, role: string) => {
   return useQuery({
-    queryKey: [QUERY_KEY.FACULTY, id],
+    queryKey: [QUERY_KEY.FACULTY, id, role],
     queryFn: async () => {
-      const { data } = await getFaculty(id);
+      const { data } = await getFaculty(id, role);
       return data.data;
     },
   });

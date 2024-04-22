@@ -13,8 +13,8 @@ export const createFaculty = (params: FacultyCreateInterface) =>
 export const deleteFaculty = (id: string) =>
   axios.delete(`${API_URL.FACULTIES}/delete/${id}`);
 
-export const getFaculty = (id: string) =>
-  axios.get(`${API_URL.FACULTIES}/${id}`);
+export const getFaculty = (id: string, role: string) =>
+  axios.get(`${API_URL.FACULTIES}/${id}?role=${role}`);
 
 export const updateFaculty = (id: string, params: FacultyCreateInterface) =>
   axios.patch(`${API_URL.FACULTIES}/update/${id}`, params);
