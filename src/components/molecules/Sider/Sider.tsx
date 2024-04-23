@@ -8,6 +8,7 @@ import {
   RightOutlined,
   TeamOutlined,
   ProjectOutlined,
+  ReadOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -110,6 +111,11 @@ const Sider: FC = () => {
       key: "faculty",
       icon: <Icon icon={BankOutlined} />,
       label: "Faculty Management",
+    });
+    menuItems.push({
+      key: "manager-article",
+      icon: <Icon icon={ReadOutlined} />,
+      label: "Publication Viewing",
     });
   }
 

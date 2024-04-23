@@ -7,7 +7,7 @@ import { TextField } from "@app/components/atoms/TextField/TextField";
 import { Modal } from "@app/components/molecules/Modal/Modal";
 import i18n from "@app/config/i18n";
 import { yupSync } from "@app/helpers/yupSync";
-import { useGetAccounts } from "@app/hooks";
+import { useGetAcademics, useGetAccounts } from "@app/hooks";
 import { useGetFaculties, useUpdateFalculty } from "@app/hooks/useFaculty";
 import { AccountsInterface } from "@app/interfaces/Account";
 import { FacultyInterface } from "@app/interfaces/Faculty";
@@ -18,6 +18,7 @@ import TextArea from "antd/es/input/TextArea";
 import { MagazineInterface } from "@app/interfaces/Magazine";
 import { useUpdateMagazine } from "@app/hooks/useMagazine";
 import dayjs from "dayjs";
+import { AcademicInterface } from "@app/interfaces/Academic";
 
 const MagazineUpdate = ({
   isModalOpen,
@@ -60,7 +61,7 @@ const MagazineUpdate = ({
     name: "",
     courseId: "",
   });
-
+  const { data: academicData } = useGetAcademics();
   const paginateOptions: GetListParams = {
     name: filters.name,
     courseId: filters.courseId,
@@ -76,6 +77,7 @@ const MagazineUpdate = ({
         description: dataDetail.description,
         closure_date: dayjs(dataDetail.closure_date),
         faculty_id: [facultyName?.id],
+        academic_id: [dataDetail.academic.id],
       }
     : {};
 
@@ -91,7 +93,12 @@ const MagazineUpdate = ({
     const { closure_date } = value;
     const formattedDate = dayjs(closure_date).format("YYYY-MM-DD");
     await Promise.all([
-      handleUpdateMagazine({ ...value, closure_date: formattedDate, faculty_id: Number(facultyName?.id) }),
+      handleUpdateMagazine({
+        ...value,
+        closure_date: formattedDate,
+        faculty_id: Number(facultyName?.id),
+        academic_id: Number(value?.academic_id),
+      }),
       setIsModalOpen(false),
       form.resetFields(),
     ]);
@@ -166,6 +173,33 @@ const MagazineUpdate = ({
                       (item: FacultyInterface) => ({
                         value: item.id,
                         label: item.name,
+                      })
+                    )}
+                  />
+                </TextField>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <TextField
+                  label="Academic Year"
+                  name="academic_id"
+                  rules={[
+                    {
+                      required: true,
+                      message: t("VALIDATE.REQUIRED", {
+                        field: "Academic",
+                      }) as string,
+                    },
+                  ]}
+                >
+                  <Select
+                    allowClear
+                    style={{ width: "100%" }}
+                    placeholder="Select Academic"
+                    filterOption={filterOption}
+                    options={academicData?.data?.map(
+                      (item: AcademicInterface) => ({
+                        value: item.id,
+                        label: item.year,
                       })
                     )}
                   />

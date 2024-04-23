@@ -21,7 +21,11 @@ import {
 import { BREADCRUMBS_ENUM, IBreadcrumbItem } from "@app/interfaces";
 import { useGetMagazine } from "@app/hooks/useMagazine";
 import { MagazineDetailColumnTable } from "./MagazineDetailColumn";
-import { useGetArticles } from "@app/hooks/useArticle";
+import {
+  useDeleteArticle,
+  useGetArticles,
+  useGetStudentArticles,
+} from "@app/hooks/useArticle";
 import { ArticleInterface } from "@app/interfaces/Article";
 import ArticleCreate from "./Article/ArticleCreate";
 import { useCallback, useState } from "react";
@@ -35,12 +39,19 @@ const MagazineDetail = () => {
   const { id } = useParams();
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { data: articleDatas } = useGetArticles();
+
+  console.log(data);
+
+  const {
+    data: articleDatas,
+    isLoading,
+    refetch,
+  } = useGetStudentArticles(getLocalStorage(ID) || "", id || "");
+
   const role = getLocalStorage(ROLE);
   const today = new Date().toISOString().slice(0, 10);
 
-  console.log(articleDatas, "hehels");
-  const { mutate: onDeleteWorkshop } = useDeleteWorkshop();
+  const { mutate: onDeleteArticle } = useDeleteArticle();
   const navigate = useNavigate();
   const { data: userDetail } = useGetAccount(getLocalStorage(ID) || "");
 
@@ -49,8 +60,6 @@ const MagazineDetail = () => {
     { key: BREADCRUMBS_ENUM.MAGAZINE, name: "Magazines" },
     { key: BREADCRUMBS_ENUM.MAGAZINE, name: "Detail" },
   ];
-
-  console.log(today > data?.closure_date, "yesno", today, data?.closure_date);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -62,15 +71,15 @@ const MagazineDetail = () => {
         navigate(`/magazines-student/${record.id}`);
         break;
       case "deleted":
-        // openModal(
-        //   () => {
-        //     onDeleteAcademicYear({ id: record.id });
-        //   },
-        //   ModalTypeEnum.CONFIRM,
-        //   ICON_URL.ICON_TRASH,
-        //   t("MODAL.CONFIRM_DELETE", { name: record.name }),
-        //   t("MODAL.TITLE_DELETE", { name: record.name })
-        // );
+        openModal(
+          () => {
+            onDeleteArticle({ id: record.id });
+          },
+          ModalTypeEnum.CONFIRM,
+          ICON_URL.ICON_TRASH,
+          t("MODAL.CONFIRM_DELETE", { name: record.title }),
+          t("MODAL.TITLE_DELETE", { name: record.title })
+        );
         break;
       case "update":
         // Promise.all([setIsModalDetailOpen(true), setId(record.id)]);
@@ -81,8 +90,8 @@ const MagazineDetail = () => {
   const onDeleted = () => {
     openModal(
       () => {
-        onDeleteWorkshop({ id: id || "" });
-        navigate("/workshops");
+        // onDeleteArticles({ id: id || "" });
+        // navigate("/workshops");
       },
       ModalTypeEnum.CONFIRM,
       ICON_URL.ICON_TRASH,
@@ -174,30 +183,34 @@ const MagazineDetail = () => {
           </Col>
         </Row>
         <Row className="p-24px pt-0px">
-          {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          <Col xs={24} sm={24} md={8} lg={8} xl={8}>
             <Row>
               <Col xs={12} sm={12} md={12} lg={9} xl={6}>
-                <Typography.Text>{t("WORKSHOP.SCORES")}</Typography.Text>
+                <Typography.Text>Year</Typography.Text>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={15} xl={18}>
+              <Col xs={12} sm={12} md={15} lg={15} xl={18}>
                 <Typography.Text className="font-bold">
-                  {data?.score}
+                  {data?.academic?.year
+                    ? data?.academic?.year
+                    : t("COURSE.NO_INFO")}
                 </Typography.Text>
               </Col>
             </Row>
-          </Col> */}
-          {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Row>
-              <Col xs={12} sm={12} md={8} lg={9} xl={6}>
-                <Typography.Text>{t("WORKSHOP.STATUS")}</Typography.Text>
+              <Col xs={12} sm={12} md={12} lg={9} xl={6}>
+                <Typography.Text>Final Closure Date</Typography.Text>
               </Col>
-              <Col xs={12} sm={12} md={16} lg={15} xl={18}>
+              <Col xs={12} sm={12} md={15} lg={15} xl={18}>
                 <Typography.Text className="font-bold">
-                  <TagStatus status={data?.status || ""} />
+                  {data?.academic?.final_closure_date
+                    ? toDateString(data?.academic?.final_closure_date)
+                    : t("COURSE.NO_INFO")}
                 </Typography.Text>
               </Col>
             </Row>
-          </Col> */}
+          </Col>
           {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
             <Row>
               <Col xs={12} sm={12} md={9} lg={9} xl={6}>

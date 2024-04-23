@@ -22,7 +22,7 @@ import FacultyCreate from "./FacultyCreate";
 import { FacultyColumnsTable } from "./FacultyListColumn";
 import FacultyUpdate from "./FacultyUpdate";
 import { getLocalStorage } from "@app/config/storage";
-import { ROLE } from "@app/constant/auth";
+import { ID, ROLE } from "@app/constant/auth";
 import FacultyAssign from "./FacultyAssign";
 
 const FacultyList = () => {
@@ -33,6 +33,7 @@ const FacultyList = () => {
   const [id, setId] = useState<string>("");
 
   const role = getLocalStorage(ROLE);
+  const idStudent = getLocalStorage(ID);
 
   const [table, setTable] = useState({
     page: 1,
@@ -45,6 +46,14 @@ const FacultyList = () => {
   const { mutate: onDeleteAcademicYear } = useDeleteFaculty();
   const { data: dataDetail } = useGetFaculty(id, "marketing_coordinator");
   const { data: dataDetailGuest } = useGetFaculty(id, "guest");
+
+  console.log(data?.data?.users);
+
+  let userExists = data?.data[0]?.users?.some(
+    (user: any) => user.id === idStudent
+  );
+
+  console.log(userExists);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -123,7 +132,7 @@ const FacultyList = () => {
         </Col>
       </Row>
       <Table<FacultyInterface>
-        columns={FacultyColumnsTable(handleAction, role || "")}
+        columns={FacultyColumnsTable(handleAction, role || "", userExists)}
         loading={isLoading}
         // onChange={handleTableChange}
         paginate={{

@@ -14,6 +14,16 @@ import { Button, Space, TableColumnsType, Tooltip } from "antd";
 import { ArticleInterface } from "@app/interfaces/Article";
 import { ButtonAction } from "@app/components/atoms/ButtonAction/ButtonAction";
 import i18n from "@app/config/i18n";
+import saveAs from "file-saver";
+import { getFileNameFromUrl } from "@app/helpers/download";
+
+const fetchAndDownload = async (filename: string) => {
+  const response = await fetch(
+    `http://localhost:8080/Articles/uploads/${filename}`
+  );
+  const blob = await response.blob();
+  saveAs(blob, filename);
+};
 
 export const MagazineDetailColumnTable = (
   handleAction: (key: string, item: ArticleInterface) => void,
@@ -21,7 +31,7 @@ export const MagazineDetailColumnTable = (
 ): TableColumnsType<ArticleInterface> => [
   {
     title: "Title",
-    width: 120,
+    width: 200,
     dataIndex: "title",
   },
   {
@@ -45,7 +55,11 @@ export const MagazineDetailColumnTable = (
     dataIndex: "file",
     render: (_text, record) => (
       <>
-        <Button icon={<FileOutlined />} type="link">
+        <Button
+          icon={<FileOutlined />}
+          type="link"
+          onClick={() => window.open(record.image_url)}
+        >
           Image
         </Button>
       </>
@@ -57,7 +71,13 @@ export const MagazineDetailColumnTable = (
     dataIndex: "file",
     render: (_text, record) => (
       <>
-        <Button icon={<FileWordOutlined />} type="link">
+        <Button
+          icon={<FileWordOutlined />}
+          type="link"
+          onClick={() =>
+            fetchAndDownload(getFileNameFromUrl(record.file_word_url))
+          }
+        >
           Word File
         </Button>
       </>
@@ -100,19 +120,21 @@ export const MagazineDetailColumnTable = (
           </>
         ) : (
           <>
+            {record.status !== "Publication" && (
+              <ButtonAction
+                variant="success"
+                handleAction={() => handleAction("publication", record)}
+                tooltip="Publication"
+              >
+                <CheckCircleOutlined />
+              </ButtonAction>
+            )}
             <ButtonAction
               variant="primary"
               tooltip="Comment"
               handleAction={() => handleAction("comment", record)}
             >
               <CommentOutlined />
-            </ButtonAction>
-            <ButtonAction
-              variant="success"
-              handleAction={() => handleAction("publication", record)}
-              tooltip="Publication"
-            >
-              <CheckCircleOutlined />
             </ButtonAction>
           </>
         )}
