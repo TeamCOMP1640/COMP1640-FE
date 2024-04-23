@@ -21,7 +21,11 @@ import {
 import { BREADCRUMBS_ENUM, IBreadcrumbItem } from "@app/interfaces";
 import { useGetMagazine } from "@app/hooks/useMagazine";
 import { MagazineDetailColumnTable } from "./MagazineDetailColumn";
-import { useGetArticles } from "@app/hooks/useArticle";
+import {
+  useGetArticles,
+  useGetArticlesById,
+  usePublicationArticle,
+} from "@app/hooks/useArticle";
 import { ArticleInterface } from "@app/interfaces/Article";
 import ArticleCreate from "./Article/ArticleCreate";
 import { useCallback, useState } from "react";
@@ -37,9 +41,10 @@ const MagazineDetailCoordinator = () => {
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalCommentOpen, setIsModalCommentOpen] = useState<boolean>(false);
-  const { data: articleDatas } = useGetArticles();
+  const { data: articleDatas } = useGetArticlesById(id ?? "");
 
-  const { mutate: onDeleteWorkshop } = useDeleteWorkshop();
+  const { mutate: onPublishArticle } = usePublicationArticle();
+
   const navigate = useNavigate();
   const { data: userDetail } = useGetAccount(getLocalStorage(ID) || "");
   const role = getLocalStorage(ROLE) || "";
@@ -73,7 +78,7 @@ const MagazineDetailCoordinator = () => {
       case "publication":
         openModal(
           () => {
-            // onDeleteAcademicYear({ id: record.id });
+            onPublishArticle(record.id);
           },
           ModalTypeEnum.CONFIRM,
           ICON_URL.ICON_SUCCESS,
@@ -90,39 +95,21 @@ const MagazineDetailCoordinator = () => {
     }
   };
 
-  const onDeleted = () => {
-    openModal(
-      () => {
-        onDeleteWorkshop({ id: id || "" });
-        navigate("/workshops");
-      },
-      ModalTypeEnum.CONFIRM,
-      ICON_URL.ICON_TRASH,
-      t("MODAL.CONFIRM_DELETE", { name: data?.title }),
-      t("MODAL.TITLE_DELETE", { name: data?.title })
-    );
-  };
+  // const onDeleted = () => {
+  //   openModal(
+  //     () => {
+  //       onDeleteWorkshop({ id: id || "" });
+  //       navigate("/workshops");
+  //     },
+  //     ModalTypeEnum.CONFIRM,
+  //     ICON_URL.ICON_TRASH,
+  //     t("MODAL.CONFIRM_DELETE", { name: data?.title }),
+  //     t("MODAL.TITLE_DELETE", { name: data?.title })
+  //   );
+  // };
 
   return (
-    <ListPage
-      page={breadcrumbItems}
-      title={"Magazine Detail"}
-      extra={
-        <Space>
-          {data?.status === StatusCourseEnum.NOT_STARTED && (
-            <ButtonAntd
-              type="primary"
-              icon={<DeleteOutlined />}
-              size="large"
-              danger
-              onClick={onDeleted}
-            >
-              {t("BUTTON.DELETE")}
-            </ButtonAntd>
-          )}
-        </Space>
-      }
-    >
+    <ListPage page={breadcrumbItems} title={"Magazine Detail"}>
       <Card className="m-24px border-none h-full">
         <Row className="p-24px">
           <Col
@@ -172,30 +159,34 @@ const MagazineDetailCoordinator = () => {
           </Col>
         </Row>
         <Row className="p-24px pt-0px">
-          {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          <Col xs={24} sm={24} md={8} lg={8} xl={8}>
             <Row>
               <Col xs={12} sm={12} md={12} lg={9} xl={6}>
-                <Typography.Text>{t("WORKSHOP.SCORES")}</Typography.Text>
+                <Typography.Text>Year</Typography.Text>
               </Col>
-              <Col xs={12} sm={12} md={12} lg={15} xl={18}>
+              <Col xs={12} sm={12} md={15} lg={15} xl={18}>
                 <Typography.Text className="font-bold">
-                  {data?.score}
+                  {data?.academic?.year
+                    ? data?.academic?.year
+                    : t("COURSE.NO_INFO")}
                 </Typography.Text>
               </Col>
             </Row>
-          </Col> */}
-          {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Row>
-              <Col xs={12} sm={12} md={8} lg={9} xl={6}>
-                <Typography.Text>{t("WORKSHOP.STATUS")}</Typography.Text>
+              <Col xs={12} sm={12} md={12} lg={9} xl={6}>
+                <Typography.Text>Final Closure Date</Typography.Text>
               </Col>
-              <Col xs={12} sm={12} md={16} lg={15} xl={18}>
+              <Col xs={12} sm={12} md={15} lg={15} xl={18}>
                 <Typography.Text className="font-bold">
-                  <TagStatus status={data?.status || ""} />
+                  {data?.academic?.final_closure_date
+                    ? toDateString(data?.academic?.final_closure_date)
+                    : t("COURSE.NO_INFO")}
                 </Typography.Text>
               </Col>
             </Row>
-          </Col> */}
+          </Col>
           {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
             <Row>
               <Col xs={12} sm={12} md={9} lg={9} xl={6}>

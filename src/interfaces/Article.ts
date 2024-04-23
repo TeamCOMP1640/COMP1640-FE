@@ -7,6 +7,8 @@ export interface ArticleInterface {
   description: string;
   status: string;
   submitted_date: Date;
+  image_url: string;
+  file_word_url: string;
   magazine: MagazineInterface;
   users: AccountsInterface[];
 }

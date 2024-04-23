@@ -1,8 +1,13 @@
 import {
   createArticle,
   deleteArticle,
+  downloadArticles,
   getArticle,
   getArticles,
+  getArticlesById,
+  getArticlesPublication,
+  getStudentArticles,
+  publishArticle,
   updateArticle,
 } from "@app/apis/article.api";
 import { QUERY_KEY } from "@app/constant/query-key";
@@ -23,6 +28,46 @@ export const useGetArticles = () => {
   });
 };
 
+export const useGetArticlesById = (id: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ARTICLE, id],
+    queryFn: async () => {
+      const { data } = await getArticlesById(id);
+      return data;
+    },
+  });
+};
+
+export const useDownload = (filename: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ARTICLE],
+    queryFn: async () => {
+      const { data } = await downloadArticles(filename);
+      return data;
+    },
+  });
+};
+
+export const useGetArticlesPublication = () => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ARTICLE],
+    queryFn: async () => {
+      const { data } = await getArticlesPublication();
+      return data;
+    },
+  });
+};
+
+export const useGetStudentArticles = (id: string, magazineId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ARTICLE, id],
+    queryFn: async () => {
+      const { data } = await getStudentArticles(id, magazineId);
+      return data;
+    },
+  });
+};
+
 export const useCreateArticle = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -36,7 +81,26 @@ export const useCreateArticle = () => {
         queryKey: [QUERY_KEY.ARTICLE],
       });
       if (data !== null) {
-        notificationSuccess("Create Article Year Successcully");
+        notificationSuccess("Create Article Successcully");
+      }
+    },
+  });
+};
+
+export const usePublicationArticle = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await publishArticle(id);
+
+      return response.data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.ARTICLE],
+      });
+      if (data !== null) {
+        notificationSuccess("Publish Article Successcully");
       }
     },
   });

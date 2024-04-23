@@ -47,6 +47,10 @@ const PublicationPost = lazy(
   () => import("@app/pages/Magazine/Publication/PublicationPost")
 );
 
+const PublicationList = lazy(
+  () => import("@app/pages/Magazine/Publication/PublicationList")
+);
+
 interface Route {
   element: JSX.Element;
   children?: Route[];
@@ -141,6 +145,15 @@ const routes = [
           {
             path: "",
             element: <FacultyList />,
+          },
+        ],
+      },
+      {
+        path: "manager-article",
+        children: [
+          {
+            path: "",
+            element: <PublicationList />,
           },
         ],
       },

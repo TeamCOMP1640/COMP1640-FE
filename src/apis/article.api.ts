@@ -1,12 +1,23 @@
 import { API_URL } from "@app/constant/url";
-import {
-  AcademicCreateInterface,
-  AcademicInterface,
-} from "@app/interfaces/Academic";
 import { ArticleCreateInterface } from "@app/interfaces/Article";
 import axios from "axios";
 
 export const getArticles = () => axios.get(API_URL.ARTICLE);
+
+export const getArticlesById = (id: string) =>
+  axios.get(`${API_URL.ARTICLE}/magazine/${id}`);
+
+export const getArticlesPublication = () =>
+  axios.get(`${API_URL.ARTICLE}/publication`);
+
+export const publishArticle = (id: string) =>
+  axios.put(`${API_URL.ARTICLE}/publication/${id}`);
+
+export const getStudentArticles = (id: string, magazineId: string) =>
+  axios.get(`${API_URL.ARTICLE}/student/${id}?magazine_id=${magazineId}`);
+
+export const downloadArticles = (filename: string) =>
+  axios.get(`${API_URL.ARTICLE}/uploads/${filename}`);
 
 export const createArticle = (params: FormData) =>
   axios.post(`${API_URL.ARTICLE}/create`, params);

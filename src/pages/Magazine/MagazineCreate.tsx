@@ -6,14 +6,14 @@ import * as yup from "yup";
 import { TextField } from "@app/components/atoms/TextField/TextField";
 import { Modal } from "@app/components/molecules/Modal/Modal";
 import i18n from "@app/config/i18n";
-import { yupSync } from "@app/helpers/yupSync";
-import { useCreateAcademic, useCreateAccount } from "@app/hooks";
 import { DATE_FORMAT } from "@app/constant/date-time";
-import { useCreateFaculty, useGetFaculties } from "@app/hooks/useFaculty";
-import TextArea from "antd/es/input/TextArea";
+import { yupSync } from "@app/helpers/yupSync";
+import { useGetAcademics } from "@app/hooks";
 import { useCreateMagazine } from "@app/hooks/useMagazine";
 import { FacultyInterface } from "@app/interfaces/Faculty";
+import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
+import { AcademicInterface } from "@app/interfaces/Academic";
 
 const MagazineCreate = ({
   isModalOpen,
@@ -47,7 +47,7 @@ const MagazineCreate = ({
   ] as unknown as Rule[];
 
   const { mutate: handleCreateMagazine, isPending } = useCreateMagazine();
-  const { data: dataFaculties, isLoading, refetch } = useGetFaculties();
+  const { data: academicData } = useGetAcademics();
 
   const handleSubmit = async (value: any) => {
     const { closure_date } = value;
@@ -65,8 +65,6 @@ const MagazineCreate = ({
   };
 
   const initialValues = { faculty_id: [facultyName?.id] };
-
-  console.log(facultyName?.id);
 
   const filterOption = (
     input: string,
@@ -132,6 +130,31 @@ const MagazineCreate = ({
                 placeholder="Select Faculty"
                 filterOption={filterOption}
                 options={[{ label: facultyName?.name, value: facultyName?.id }]}
+              />
+            </TextField>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+            <TextField
+              label="Academic Year"
+              name="academic_id"
+              rules={[
+                {
+                  required: true,
+                  message: t("VALIDATE.REQUIRED", {
+                    field: "Academic",
+                  }) as string,
+                },
+              ]}
+            >
+              <Select
+                allowClear
+                style={{ width: "100%" }}
+                placeholder="Select Academic"
+                filterOption={filterOption}
+                options={academicData?.data?.map((item: AcademicInterface) => ({
+                  value: item.id,
+                  label: item.year,
+                }))}
               />
             </TextField>
           </Col>
