@@ -7,6 +7,9 @@ import axios from "axios";
 
 export const getFaculties = () => axios.get(API_URL.FACULTIES);
 
+export const getDashboardFaculties = () =>
+  axios.get(`${API_URL.FACULTIES}/dashboard`);
+
 export const createFaculty = (params: FacultyCreateInterface) =>
   axios.post(`${API_URL.FACULTIES}/create`, params);
 

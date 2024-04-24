@@ -18,6 +18,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { useGetDasboardFaculties } from "@app/hooks/useFaculty";
 
 ChartJS.register(
   CategoryScale,
@@ -39,26 +40,28 @@ export const Dashboard = () => {
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
+        text: "Number of article by faculty",
       },
     },
   };
 
-  const labels = [
-    "Graphic",
-    "Technical",
-    "Business",
-    "IOT",
-    "Language",
-    "Traveling",
-  ];
+  const { data: dashboardData } = useGetDasboardFaculties();
+  console.log(dashboardData?.data);
+
+  const labels = Array.isArray(dashboardData?.data)
+    ? dashboardData.data.map((data: any) => data?.faculty_name)
+    : [];
+
+  const numberOfArticle = Array.isArray(dashboardData?.data)
+    ? dashboardData.data.map((data: any) => data?.article_count)
+    : [];
 
   const dataChart = {
     labels,
     datasets: [
       {
         label: "The number of articles",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        data: numberOfArticle,
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       // {
@@ -96,7 +99,7 @@ export const Dashboard = () => {
                   {/* {t("SIDER.COURSES")} */} Falcuty
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {/* {data?.courses} */} 10
+                  {/* {data?.courses} */} 4
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">
@@ -119,7 +122,7 @@ export const Dashboard = () => {
                   {/* {t("TEAM.MENTEES")} */} Student
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {data?.mentees} 20
+                  {data?.mentees} 5
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">
@@ -142,7 +145,7 @@ export const Dashboard = () => {
                   {/* {t("TEAM.MENTORS")} */} Article
                 </Typography>
                 <span className="text-32pix font-bold leading-extra-loose">
-                  {/* {data?.mentors} */} 30
+                  {/* {data?.mentors} */} 10
                 </span>
               </Col>
               <Col sm={4} md={4} lg={4} xl={4} className="flex items-end">

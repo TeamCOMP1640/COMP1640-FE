@@ -41,6 +41,7 @@ const MagazineDetailCoordinator = () => {
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalCommentOpen, setIsModalCommentOpen] = useState<boolean>(false);
+  const [articleId, setArticleId] = useState("");
   const { data: articleDatas } = useGetArticlesById(id ?? "");
 
   const { mutate: onPublishArticle } = usePublicationArticle();
@@ -87,6 +88,7 @@ const MagazineDetailCoordinator = () => {
         );
         break;
       case "comment":
+        setArticleId(record.id);
         setIsModalCommentOpen(true);
         break;
       case "update":
@@ -236,6 +238,7 @@ const MagazineDetailCoordinator = () => {
       <ArticleComment
         isModalOpen={isModalCommentOpen}
         setIsModalOpen={setIsModalCommentOpen}
+        articleId={articleId}
       />
       <Table
         columns={MagazineDetailColumnTable(handleAction, role)}

@@ -77,7 +77,7 @@ const MagazineUpdate = ({
         description: dataDetail.description,
         closure_date: dayjs(dataDetail.closure_date),
         faculty_id: [facultyName?.id],
-        academic_id: [dataDetail.academic.id],
+        academic_id: [dataDetail.academic?.id],
       }
     : {};
 

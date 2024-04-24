@@ -32,7 +32,7 @@ export const useLogin = () => {
     },
     onSuccess: (data) => {
       if (data.code !== 404 && data.message !== 403) {
-        notificationSuccess(i18n.t("MESSAGE." + data.message));
+        notificationSuccess(data.message);
         dispatchAuth(login(data.data));
         setStorageData(ACCESS_TOKEN, data.data.access_token);
         setStorageData(REFRESH_TOKEN, data.data.refreshToken);
@@ -42,7 +42,7 @@ export const useLogin = () => {
         setStorageData(ID, data.data.id);
         navigate("/");
       } else {
-        notificationError(i18n.t("MESSAGE." + data.message));
+        notificationError(data.message);
       }
     },
   });

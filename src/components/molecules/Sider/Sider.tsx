@@ -68,11 +68,6 @@ const Sider: FC = () => {
   };
 
   const menuItems: DropdownProps["items"] = [
-    {
-      key: "",
-      icon: <Icon icon={AppstoreOutlined} />,
-      label: t("SIDER.DASHBOARD"),
-    },
     // {
     //   key: "courses",
     //   icon: <Icon icon={FolderOutlined} />,
@@ -83,7 +78,6 @@ const Sider: FC = () => {
     //   icon: <Icon icon={GiftOutlined} />,
     //   label: t("SIDER.GIFTS"),
     // },
-
     // {
     //   key: "workshops",
     //   icon: <Icon icon={CalendarOutlined} />,
@@ -108,6 +102,11 @@ const Sider: FC = () => {
 
   if (role === "marketing_manager") {
     menuItems.push({
+      key: "/",
+      icon: <Icon icon={AppstoreOutlined} />,
+      label: t("SIDER.DASHBOARD"),
+    });
+    menuItems.push({
       key: "faculty",
       icon: <Icon icon={BankOutlined} />,
       label: "Faculty Management",
@@ -120,6 +119,11 @@ const Sider: FC = () => {
   }
 
   if (role === "marketing_coordinator") {
+    menuItems.push({
+      key: "/",
+      icon: <Icon icon={AppstoreOutlined} />,
+      label: t("SIDER.DASHBOARD"),
+    });
     menuItems.push({
       key: "magazine",
       icon: <Icon icon={ProjectOutlined} />,

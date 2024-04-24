@@ -1,101 +1,82 @@
-import {
-  Button,
-  Checkbox,
-  CheckboxProps,
-  Col,
-  Form,
-  Input,
-  Row,
-  Select,
-  Upload,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { Rule } from "antd/es/form";
+import { Col, Form, Row } from "antd";
 import { useTranslation } from "react-i18next";
-import * as yup from "yup";
 
 import { TextField } from "@app/components/atoms/TextField/TextField";
 import { Modal } from "@app/components/molecules/Modal/Modal";
-import i18n from "@app/config/i18n";
-import { yupSync } from "@app/helpers/yupSync";
-import { useGetFaculties } from "@app/hooks/useFaculty";
-import { useCreateMagazine } from "@app/hooks/useMagazine";
-import { FacultyInterface } from "@app/interfaces/Faculty";
-import TextArea from "antd/es/input/TextArea";
-import dayjs from "dayjs";
-import { useCreateArticle } from "@app/hooks/useArticle";
-import { useParams } from "react-router-dom";
-import { ID } from "@app/constant/auth";
 import { getLocalStorage } from "@app/config/storage";
-import { useState } from "react";
-import { notificationError } from "@app/helpers/notification";
+import { ID } from "@app/constant/auth";
+import {
+  useCheckExistComment,
+  useCreateComment,
+  useGetComment,
+  useUpdateComment,
+} from "@app/hooks/useComment";
+import TextArea from "antd/es/input/TextArea";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const ArticleComment = ({
   isModalOpen,
   setIsModalOpen,
+  articleId,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
+  articleId: string;
 }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const { id } = useParams();
-  const [checkTerm, setCheckTerm] = useState(false);
-  const validator = [
-    yupSync(
-      yup.object().shape({
-        title: yup
-          .string()
-          .trim()
-          .required(
-            i18n.t("VALIDATE.REQUIRED", {
-              field: "Title",
-            })
-          ),
-      })
-    ),
-  ] as unknown as Rule[];
 
-  const { mutate: handleCreateArticle, isPending } = useCreateArticle();
-  const { data: dataFaculties, isLoading, refetch } = useGetFaculties();
+  const { data: isExist } = useCheckExistComment(
+    articleId,
+    getLocalStorage(ID) || ""
+  );
 
-  const handleSubmit = async (value: any) => {
-    const formattedDate = dayjs(new Date()).format("YYYY-MM-DD");
-    if (!checkTerm) {
-      notificationError("Can't submit if not agree with term");
-      return;
-    }
-    const { image } = value;
+  const { data: dataComment } = useGetComment(
+    articleId,
+    getLocalStorage(ID) || ""
+  );
 
-    const formData = new FormData();
-    formData.append("file", image);
-    await Promise.all([
-      handleCreateArticle({
-        ...value,
-        submitted_date: formattedDate,
-        magazine_id: id,
-        status: "Not Publication",
-        user_id: getLocalStorage(ID),
-      }),
-      setIsModalOpen(false),
-      form.resetFields(),
-    ]);
+  const initialValues = {
+    detail: dataComment ? dataComment.detail : "",
   };
 
-  //   const initialValues = { faculty_id: [facultyName?.id] };
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, dataComment]);
 
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const { mutate: handleCreateComment, isPending } = useCreateComment();
+  const { mutate: handleUpdateComment, isPending: updatePending } =
+    useUpdateComment(dataComment?.id);
 
-  const onChange: CheckboxProps["onChange"] = (e) => {
-    setCheckTerm(e.target.checked);
+  const handleSubmit = async (value: any) => {
+    if (!dataComment) {
+      await Promise.all([
+        handleCreateComment({
+          ...value,
+          article_id: articleId,
+          user_id: getLocalStorage(ID),
+        }),
+        setIsModalOpen(false),
+        form.resetFields(),
+      ]);
+    } else {
+      await Promise.all([
+        handleUpdateComment({
+          ...value,
+          // article_id: articleId,
+          // user_id: getLocalStorage(ID),
+        }),
+        setIsModalOpen(false),
+        form.resetFields(),
+      ]);
+    }
   };
 
   return (
     <Modal
-      title="Submit Comment"
+      title="Add a Comment"
       open={isModalOpen}
       onOk={form.submit}
       onCancel={() => {
@@ -110,11 +91,11 @@ const ArticleComment = ({
         id="form-applications"
         labelAlign="left"
         wrapperCol={{ span: 24 }}
-        // initialValues={initialValues}
+        initialValues={initialValues}
       >
         <Row gutter={[8, 8]} className="px-15px py-1rem">
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-            <TextField label="Comment about article" name="comment">
+            <TextField label="Comment about article" name="detail">
               <TextArea
                 showCount
                 maxLength={1000}
