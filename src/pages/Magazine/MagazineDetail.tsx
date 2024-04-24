@@ -32,6 +32,7 @@ import { useCallback, useState } from "react";
 import { useGetAccount } from "@app/hooks";
 import { getLocalStorage } from "@app/config/storage";
 import { ID, ROLE } from "@app/constant/auth";
+import CommentListModal from "./CommentListModal";
 // import { WorkshopDetailColumnsTable } from "./WorkshopDetailColumn";
 
 const MagazineDetail = () => {
@@ -39,8 +40,8 @@ const MagazineDetail = () => {
   const { id } = useParams();
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  console.log(data);
+  const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
+  const [articleId, setArticleId] = useState("");
 
   const {
     data: articleDatas,
@@ -68,7 +69,8 @@ const MagazineDetail = () => {
   const handleAction = (action: string, record: ArticleInterface) => {
     switch (action) {
       case "detail":
-        navigate(`/magazines-student/${record.id}`);
+        setArticleId(record.id);
+        setIsModalCommentOpen(true);
         break;
       case "deleted":
         openModal(
@@ -257,6 +259,12 @@ const MagazineDetail = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         facultyName={facultyName}
+      />
+
+      <CommentListModal
+        isModalOpen={isModalCommentOpen}
+        setIsModalOpen={setIsModalCommentOpen}
+        articleId={articleId}
       />
 
       {checkDate(data?.closure_date) ? (

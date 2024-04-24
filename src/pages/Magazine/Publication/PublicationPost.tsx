@@ -1,11 +1,19 @@
 import React from "react";
 import { Card, Typography } from "antd";
 import Title from "antd/es/skeleton/Title";
+import {
+  useGetArticles,
+  useGetArticlesPublication,
+} from "@app/hooks/useArticle";
+import { ArticleInterface } from "@app/interfaces/Article";
+import { useNavigate } from "react-router-dom";
 
 const { Meta } = Card;
 
 const PublicationPost = () => {
-  // Sample data for demonstration
+  const { data } = useGetArticlesPublication();
+  const navigate = useNavigate();
+
   const articles = [
     {
       id: 1,
@@ -38,14 +46,25 @@ const PublicationPost = () => {
     <div style={{ padding: "100px" }}>
       {/* <Typography>List Publication Article of faculty</Typography> */}
       <div className="grid grid-cols-3 gap-8">
-        {shuffledArticles.map((article) => (
+        {data?.data?.map((article: ArticleInterface) => (
           <Card
             key={article.id}
             hoverable
-            cover={<img alt={article.title} src={article.imageUrl} />}
-            style={{ width: 300 }}
+            cover={<img alt={article.title} src={article.image_url} />}
+            style={{
+              maxWidth: 900,
+              margin: "30px auto",
+              overflowY: "scroll",
+              maxHeight: "500px",
+            }}
+            onClick={() => {
+              navigate(`/publication/${article.id}`);
+            }}
           >
-            <Meta title={article.title} description={article.description} />
+            <Meta
+              title={article.title}
+              description={article.publication_content}
+            />
           </Card>
         ))}
       </div>

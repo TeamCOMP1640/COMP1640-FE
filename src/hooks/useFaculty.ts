@@ -5,6 +5,7 @@ import {
   getFaculty,
   deleteFaculty,
   assignStudent,
+  getDashboardFaculties,
 } from "@app/apis/faculty.api";
 import { QUERY_KEY } from "@app/constant/query-key";
 import {
@@ -22,6 +23,16 @@ export const useGetFaculties = () => {
     queryKey: [QUERY_KEY.FACULTY],
     queryFn: async () => {
       const { data } = await getFaculties();
+      return data;
+    },
+  });
+};
+
+export const useGetDasboardFaculties = () => {
+  return useQuery({
+    queryKey: [QUERY_KEY.FACULTY],
+    queryFn: async () => {
+      const { data } = await getDashboardFaculties();
       return data;
     },
   });
