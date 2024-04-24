@@ -112,7 +112,7 @@ const AccountUpdate = ({
     <>
       {dataDetail && (
         <Modal
-          title={t("WORKSHOP.UPDATE_WORKSHOP")}
+          title="Account Update"
           open={isModalOpen}
           onOk={form.submit}
           onCancel={() => {

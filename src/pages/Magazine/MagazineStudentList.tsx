@@ -55,6 +55,7 @@ const MagazineStudentList = () => {
   const { data, isLoading, refetch } = useGetStudentMagazines(
     getLocalStorage(ID) || ""
   );
+  console.log(data);
   const { mutate: onDeleteAcademicYear } = useDeleteMagazine();
   const { data: dataDetail } = useGetMagazine(id);
 

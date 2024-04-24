@@ -22,9 +22,9 @@ import { BREADCRUMBS_ENUM, IBreadcrumbItem } from "@app/interfaces";
 import { useGetMagazine } from "@app/hooks/useMagazine";
 import { MagazineDetailColumnTable } from "./MagazineDetailColumn";
 import {
-  useDeleteArticle,
   useGetArticles,
-  useGetStudentArticles,
+  useGetArticlesById,
+  usePublicationArticle,
 } from "@app/hooks/useArticle";
 import { ArticleInterface } from "@app/interfaces/Article";
 import ArticleCreate from "./Article/ArticleCreate";
@@ -32,29 +32,23 @@ import { useCallback, useState } from "react";
 import { useGetAccount } from "@app/hooks";
 import { getLocalStorage } from "@app/config/storage";
 import { ID, ROLE } from "@app/constant/auth";
-import CommentListModal from "./CommentListModal";
+import ArticleComment from "./Article/ArticleComment";
 // import { WorkshopDetailColumnsTable } from "./WorkshopDetailColumn";
 
-const MagazineDetail = () => {
+const MagazineDetailCoordinator = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { data } = useGetMagazine(id ?? "");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isModalCommentOpen, setIsModalCommentOpen] = useState(false);
+  const [isModalCommentOpen, setIsModalCommentOpen] = useState<boolean>(false);
   const [articleId, setArticleId] = useState("");
+  const { data: articleDatas } = useGetArticlesById(id ?? "");
 
-  const {
-    data: articleDatas,
-    isLoading,
-    refetch,
-  } = useGetStudentArticles(getLocalStorage(ID) || "", id || "");
+  const { mutate: onPublishArticle } = usePublicationArticle();
 
-  const role = getLocalStorage(ROLE);
-  const today = new Date().toISOString().slice(0, 10);
-
-  const { mutate: onDeleteArticle } = useDeleteArticle();
   const navigate = useNavigate();
   const { data: userDetail } = useGetAccount(getLocalStorage(ID) || "");
+  const role = getLocalStorage(ROLE) || "";
 
   const facultyName = userDetail?.faculties[0];
   const breadcrumbItems: IBreadcrumbItem[] = [
@@ -69,19 +63,33 @@ const MagazineDetail = () => {
   const handleAction = (action: string, record: ArticleInterface) => {
     switch (action) {
       case "detail":
-        setArticleId(record.id);
-        setIsModalCommentOpen(true);
+        navigate(`/magazines-student/${record.id}`);
         break;
       case "deleted":
+        // openModal(
+        //   () => {
+        //     onDeleteAcademicYear({ id: record.id });
+        //   },
+        //   ModalTypeEnum.CONFIRM,
+        //   ICON_URL.ICON_TRASH,
+        //   t("MODAL.CONFIRM_DELETE", { name: record.name }),
+        //   t("MODAL.TITLE_DELETE", { name: record.name })
+        // );
+        break;
+      case "publication":
         openModal(
           () => {
-            onDeleteArticle({ id: record.id });
+            onPublishArticle(record.id);
           },
           ModalTypeEnum.CONFIRM,
-          ICON_URL.ICON_TRASH,
-          t("MODAL.CONFIRM_DELETE", { name: record.title }),
-          t("MODAL.TITLE_DELETE", { name: record.title })
+          ICON_URL.ICON_SUCCESS,
+          t("MODAL.CONFIRM_PUBLICATION", { name: record.title }),
+          t("MODAL.TITLE_PUBLICATION", { name: record.title })
         );
+        break;
+      case "comment":
+        setArticleId(record.id);
+        setIsModalCommentOpen(true);
         break;
       case "update":
         // Promise.all([setIsModalDetailOpen(true), setId(record.id)]);
@@ -89,53 +97,21 @@ const MagazineDetail = () => {
     }
   };
 
-  const onDeleted = () => {
-    openModal(
-      () => {
-        // onDeleteArticles({ id: id || "" });
-        // navigate("/workshops");
-      },
-      ModalTypeEnum.CONFIRM,
-      ICON_URL.ICON_TRASH,
-      t("MODAL.CONFIRM_DELETE", { name: data?.title }),
-      t("MODAL.TITLE_DELETE", { name: data?.title })
-    );
-  };
-
-  const checkDate = (dateInput: string) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const inputDate = new Date(dateInput);
-    inputDate.setHours(0, 0, 0, 0);
-
-    if (today.getTime() > inputDate.getTime()) {
-      return false;
-    } else if (today.getTime() <= inputDate.getTime()) {
-      return true;
-    }
-  };
+  // const onDeleted = () => {
+  //   openModal(
+  //     () => {
+  //       onDeleteWorkshop({ id: id || "" });
+  //       navigate("/workshops");
+  //     },
+  //     ModalTypeEnum.CONFIRM,
+  //     ICON_URL.ICON_TRASH,
+  //     t("MODAL.CONFIRM_DELETE", { name: data?.title }),
+  //     t("MODAL.TITLE_DELETE", { name: data?.title })
+  //   );
+  // };
 
   return (
-    <ListPage
-      page={breadcrumbItems}
-      title={"Magazine Detail"}
-      extra={
-        <Space>
-          {data?.status === StatusCourseEnum.NOT_STARTED && (
-            <ButtonAntd
-              type="primary"
-              icon={<DeleteOutlined />}
-              size="large"
-              danger
-              onClick={onDeleted}
-            >
-              {t("BUTTON.DELETE")}
-            </ButtonAntd>
-          )}
-        </Space>
-      }
-    >
+    <ListPage page={breadcrumbItems} title={"Magazine Detail"}>
       <Card className="m-24px border-none h-full">
         <Row className="p-24px">
           <Col
@@ -254,34 +230,22 @@ const MagazineDetail = () => {
           </Col>
         </Row>
       </Card>
-
       <ArticleCreate
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         facultyName={facultyName}
       />
-
-      <CommentListModal
+      <ArticleComment
         isModalOpen={isModalCommentOpen}
         setIsModalOpen={setIsModalCommentOpen}
         articleId={articleId}
       />
-
-      {checkDate(data?.closure_date) ? (
-        <Row justify="end" className="w-full pb-1rem pr-24px">
-          <Col>
-            <Button type="primary" onClick={() => showModal()}>
-              Submit Article
-            </Button>
-          </Col>
-        </Row>
-      ) : null}
       <Table
-        columns={MagazineDetailColumnTable(handleAction, role || "")}
+        columns={MagazineDetailColumnTable(handleAction, role)}
         dataSource={articleDatas?.data || []}
       />
     </ListPage>
   );
 };
 
-export default MagazineDetail;
+export default MagazineDetailCoordinator;

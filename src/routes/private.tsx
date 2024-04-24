@@ -39,6 +39,21 @@ const MagazineStudentList = lazy(
 );
 
 const MagazineDetail = lazy(() => import("@app/pages/Magazine/MagazineDetail"));
+const MagazineDetailCoordinator = lazy(
+  () => import("@app/pages/Magazine/MagazineDetailCoordinator")
+);
+
+const PublicationPost = lazy(
+  () => import("@app/pages/Magazine/Publication/PublicationPost")
+);
+
+const PublicationList = lazy(
+  () => import("@app/pages/Magazine/Publication/PublicationList")
+);
+
+const PublicationDetail = lazy(
+  () => import("@app/pages/Magazine/Publication/PublicationDetail")
+);
 
 interface Route {
   element: JSX.Element;
@@ -109,6 +124,10 @@ const routes = [
             path: "",
             element: <MagazineList />,
           },
+          {
+            path: ":id",
+            element: <MagazineDetailCoordinator />,
+          },
         ],
       },
       {
@@ -130,6 +149,29 @@ const routes = [
           {
             path: "",
             element: <FacultyList />,
+          },
+        ],
+      },
+      {
+        path: "manager-article",
+        children: [
+          {
+            path: "",
+            element: <PublicationList />,
+          },
+        ],
+      },
+
+      {
+        path: "publication",
+        children: [
+          {
+            path: "",
+            element: <PublicationPost />,
+          },
+          {
+            path: ":id",
+            element: <PublicationDetail />,
           },
         ],
       },

@@ -3,7 +3,9 @@ import { AccountCreate, AddScoreInterface } from "@app/interfaces/Account";
 import { GetListParams } from "@app/interfaces/common";
 import axios from "axios";
 
-export const getAccounts = (params: GetListParams) =>
+export const getAccounts = (
+  params: GetListParams & { role: string; facultyId?: number }
+) =>
   axios.get(API_URL.ACCOUNT, {
     params,
   });

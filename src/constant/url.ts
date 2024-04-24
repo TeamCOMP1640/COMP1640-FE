@@ -15,4 +15,6 @@ export const API_URL = {
   ACADEMICS: "/academics",
   FACULTIES: "/faculties",
   MAGAZINE: "/magazines",
+  ARTICLE: "/articles",
+  COMMENT: "/comments",
 };

@@ -14,7 +14,8 @@ import { FacultyInterface } from "@app/interfaces/Faculty";
 
 export const FacultyColumnsTable = (
   handleAction: (key: string, item: FacultyInterface) => void,
-  role: string
+  role: string,
+  userExist: boolean
 ): ColumnsType<FacultyInterface> => {
   const columns: ColumnsType<FacultyInterface> = [
     {
@@ -32,10 +33,11 @@ export const FacultyColumnsTable = (
       width: 100,
       render: (_text, record) => (
         <Space>
-          {role === "student" ? (
+          {role === "student" && userExist ? null : role === "student" &&
+            !userExist ? (
             <ButtonAction
               variant="primary"
-              tooltip='Assign to faculty'
+              tooltip="Assign to faculty"
               handleAction={() => handleAction("assign", record)}
             >
               <CarryOutOutlined />
